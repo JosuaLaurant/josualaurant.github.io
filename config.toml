@@ -1,5 +1,0 @@
-baseURL = 'https://josualaurant.github.io/'
-languageCode = 'en-us'
-title = '개발 블로그'
-theme = 'dream'
-paginate = 10

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on My New Hugo Site</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Mar 2025 18:19:30 +0900</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>미니 PC 구입</title>
+      <link>http://localhost:1313/posts/1/</link>
+      <pubDate>Sat, 22 Mar 2025 18:19:30 +0900</pubDate>
+      <guid>http://localhost:1313/posts/1/</guid>
+      <description>주문하기까지 십덕 슬랙에서 NAS 이야기를 하던 도중에 지금 사용 중인 모델인 ds418play에서 Docker가 공식 지원하지 않는다는 말에서 미니PC 이야기가 나오게 되었다.&#xA;저번 정모에서 파티룸에 미니PC를 들고와서 유용하게 써먹었던 기억도 있고 다시 월급쟁이 생활을 시작하면서 살짝 여유가 생겨 미니PC 뽐뿌가 오게 되었는데 마침 알리익스프레스가 15주년? 이벤트로 이것저것 행사를 시작한 것&amp;hellip;&#xA;관심있다고 하자마자 N100 모델 구매 링크를 받았는데 가격이 100달러 밖에 하지 않아서 좀 솔깃했는데 이게 쿠폰 적용전 가격이고 적용하면 80달러 정도까지 떨어지는 것이었다.</description>
+    </item>
+  </channel>
+</rss>

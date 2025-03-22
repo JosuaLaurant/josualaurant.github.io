@@ -1,392 +1,184 @@
 <!DOCTYPE html>
-<html lang="en-us"
-  x-data
-  :class="$store.darkMode.class()"
-  :data-theme="$store.darkMode.theme()">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | My New Hugo Site</title>
+<html lang="en-us">
+    
+  <head>
+    <link href="https://gmpg.org/xfn/11" rel="profile">
+    
+    <link rel="canonical" href="https://example.org/">
+    
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Enable responsiveness on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="generator" content="Hugo 0.123.7">
 
     
 
-<link rel="canonical" href="http://localhost:1313/" />
-
-
-
-<meta name="author" content="" />
-<meta name="description" content="" />
-
-
-
-<meta name="generator" content="Hugo 0.123.7">
-
-
-<meta property="og:title" content="My New Hugo Site" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://localhost:1313/" />
-
-
+<title>My New Hugo Site</title>
 
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="My New Hugo Site"/>
 <meta name="twitter:description" content=""/>
 
+<meta property="og:title" content="My New Hugo Site" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://example.org/" />
 
 
-
-<link rel="stylesheet" href="/css/output.css" />
-
-
-
-
-     
 
     
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  </head>
 
-  <body x-data="{
-    flip: false,
-  }">
+
+
+
+
+<link rel="stylesheet" href="/scss/triple-hyde.ef937e1c8a424ea6419b858ae4cfbdb5f7e764eb1075e9ac50fa2de759dde8a2.css" integrity="sha256-75N&#43;HIpCTqZBm4WK5M&#43;9tffnZOsQdemsUPot51nd6KI=">
+
+
+<link rel="stylesheet" href="/scss/print.2744dcbf8a0b2e74f8a50e4b34e5f441be7cf93cc7de27029121c6a09f9e77bc.css" integrity="sha256-J0Tcv4oLLnT4pQ5LNOX0Qb58&#43;TzH3icCkSHGoJ&#43;ed7w=" media="print">
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="alternate" type="application/rss+xml" href="https://example.org/index.xml" title="My New Hugo Site" />
+
     
-    <div id="dream-global-bg"></div>
 
+</head>
+
+
+    <body class=" ">
     
-<nav class="mt-4 lg:mt-8 py-4">
-
+<div class="sidebar">
+  <div class="container ">
+    <div class="sidebar-about">
+  <span class="site__title">
+    <a href="https://example.org/">
+    
+      My New Hugo Site
+    
+    </a>
+  </span>
   
-  <div class="container flex justify-between px-4">
   
-    <section class="flex items-center gap-4">
-      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="Flip it!">
-        <div class="h-10 rounded-full">
-          <img src="/" alt="" />
-        </div>
+  <p class="site__description">
+    
+  </p>
+</div>
+
+    <div class="collapsible-menu">
+      <input type="checkbox" id="menuToggle">
+      <label for="menuToggle">My New Hugo Site</label>
+      <div class="menu-content">
+        <div>
+	<ul class="sidebar-nav">
+		 
+		
+	</ul>
+</div>
+
+        <section class="social">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</section>
+
       </div>
-
-      
-    </section>
-
-    <div class="dropdown dropdown-end sm:hidden">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
-        <ion-icon name="menu" class="text-2xl"></ion-icon>
-      </div>
-      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-1 shadow-md">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li>
-  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="Archives">
-    <ion-icon name="archive"></ion-icon>
-    Archives
-  </a>
-</li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      </ul>
     </div>
-    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
-      
-      
-
-      
-
-      
-      
+    
 
 
-
-
-
-      
-      
-
-
-
-
-
-      
-      
-
-
-
-
-
-      
-      
-<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/posts" title="Archives">
-  <ion-icon class="group-hover:text-primary-content" name="archive"></ion-icon>
-</a>
-
-
-      
-      
-
-
-
-
-
-      
-      
-
-
-
-
-
-      
-
-      
-
-      
-    </section>
   </div>
-</nav>
+</div>
 
-
-    <div class="flip-container" :class="{ 'flip-it': flip }">
-      <div class="flipper">
-        <div class="front">
-          <div class="container">
+        <div class="content container">
             
-
-
-
-
-<div class="dream-grid opacity-0">
-  
-    <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
-      <a class="card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30" href="/posts/1/">
-  
-  <figure>
+  <div class="post-list">
     
     
-    <picture>
-      <source srcset="/images/default2_hu3d03a01dcc18bc5be0e67db3d8d209a6_92733_640x443_resize_q75_h2_box.webp" type="image/webp" />
-      <img src="/images/default2.jpg" alt="/images/default2.jpg" />
-    </picture>
-    
-  </figure>
-  
-
-  <div class="card-body">
-    <h2 class="card-title">미니 PC 구입</h2>
-
-    <p class="date text-base-content/60">
-    
-      Saturday, Mar 22, 2025
-    
-    </p>
-
-    주문하기까지 십덕 슬랙에서 NAS 이야기를 하던 도중에 지금 사용 중인 모델인 ds418play에서 Docker가 공식 지원하지 않는다는 말에서 미니PC 이야기가 나오게 되었다.
+      
+        
+      
+      <div class="post-list__item">
+        <span class="item__title--big">
+          <a href="/posts/2/" class="draft">Hugo로 블로그 만들기</a>
+        </span>
+        <span class="item__date">
+          Mar 22, 2025
+        </span>
+        <span class="draft">
+        
+        들어가면서 사실 현재 보이는 결과물 이전에 사실 수차례의 블로그를 만드려는 시도가 있었다.
+당장 초등학생 때부터 다음이나 네이버 블로그를 사용하고 있었지만
+개발을 시작하면서 특정 사이트의 블로그가 아니라 직접 만든 블로그를 써보고 싶었고
+어떤 방식으로 / 어떻게 관리할 것인지 엄청나게 고민했었다.
+실제로 첫 시도를 했던 건 아마 16년인데 (github에 16년도에 지킬이 어쩌구 하는 repository가 있음)
+정작 현재 이 글이 작성되고 있는 Hugo와 Github Pages를 이용한 블로그가 세상 밖으로 나온 첫 블로그다&hellip;
+매번 고민하면서 어떤 기술을 사용할 지 고민하다가 그만두기를 반복하다가
+        
+        </span>
+        
+          ... <a class="read-more-symbol" href="/posts/2/">➦</a>
+        
+        </div>
+        
+     
+      
+        
+      
+      <div class="post-list__item">
+        <span class="item__title--big">
+          <a href="/posts/1/" class="draft">미니 PC 구입</a>
+        </span>
+        <span class="item__date">
+          Mar 22, 2025
+        </span>
+        <span class="draft">
+        
+        주문하기까지 십덕 슬랙에서 NAS 이야기를 하던 도중에 지금 사용 중인 모델인 ds418play에서 Docker가 공식 지원하지 않는다는 말에서 미니PC 이야기가 나오게 되었다.
 저번 정모에서 파티룸에 미니PC를 들고와서 유용하게 써먹었던 기억도 있고 다시 월급쟁이 생활을 시작하면서 살짝 여유가 생겨 미니PC 뽐뿌가 오게 되었는데 마침 알리익스프레스가 15주년? 이벤트로 이것저것 행사를 시작한 것&hellip;
 관심있다고 하자마자 N100 모델 구매 링크를 받았는데 가격이 100달러 밖에 하지 않아서 좀 솔깃했는데 이게 쿠폰 적용전 가격이고 적용하면 80달러 정도까지 떨어지는 것이었다.
-
-    
-    <div class="card-actions justify-between items-center mt-4">
-      
-
-      <div class="flex items-center">
-        <ion-icon name="time" class="mr-1"></ion-icon>
-        <span>3 minute read</span>
-      </div>
-    </div>
+        
+        </span>
+        
+          ... <a class="read-more-symbol" href="/posts/1/">➦</a>
+        
+        </div>
+        
+     
   </div>
-</a>
-
-    </div>
-  
-</div>
-
-
-
-
-
-
-            
-<footer class="flex justify-between items-center gap-2 px-4 py-12">
-
-  <div>
-  
-  <p>© 2025 My New Hugo Site</p>
   
 
-  
-  <p class="text-sm">
-    🌱
-    <span class="text-base-content/60">
-      Powered by <a class="hover:underline" href="https://gohugo.io/" target="_blank">Hugo</a> with theme
-      <a class="hover:underline" href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</span
-    >
-  </p>
-  
-</div>
 
-  <div
-  x-data="{ icons: [
-    { name: 'sunny', status: 'n' },
-    { name: 'moon', status: 'y' },
-    { name: 'desktop', status: 'auto' }
-  ] }"
-  class="flex items-center gap-2 h-[32px] px-2 bg-base-100 border border-base-content/30 rounded-full"
->
-  <template x-for="icon in icons">
-    <div
-      role="button"
-      tabindex="0"
-      :aria-label="'Select ' + icon.name + ' mode'"
-      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
-      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
-      @click="$store.darkMode.toggle(icon.status)"
-    >
-      <ion-icon
-        :name="`${icon.name}-outline`"
-        class="group-hover:text-primary-content"
-        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
-      >
-      </ion-icon>
-    </div>
-  </template>
-</div>
-
-</footer>
-
-          </div>
         </div>
-        <div class="back">
-          <div class="container">
-            
-            <div class="dream-grid dream-grid-about">
+        
   
 
-  
-
-  
-</div>
-
-            
-
-            
-<footer class="flex justify-between items-center gap-2 px-4 py-12">
-
-  <div>
-  
-  <p>© 2025 My New Hugo Site</p>
-  
-
-  
-  <p class="text-sm">
-    🌱
-    <span class="text-base-content/60">
-      Powered by <a class="hover:underline" href="https://gohugo.io/" target="_blank">Hugo</a> with theme
-      <a class="hover:underline" href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</span
-    >
-  </p>
-  
-</div>
-
-  <div
-  x-data="{ icons: [
-    { name: 'sunny', status: 'n' },
-    { name: 'moon', status: 'y' },
-    { name: 'desktop', status: 'auto' }
-  ] }"
-  class="flex items-center gap-2 h-[32px] px-2 bg-base-100 border border-base-content/30 rounded-full"
->
-  <template x-for="icon in icons">
-    <div
-      role="button"
-      tabindex="0"
-      :aria-label="'Select ' + icon.name + ' mode'"
-      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
-      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
-      @click="$store.darkMode.toggle(icon.status)"
-    >
-      <ion-icon
-        :name="`${icon.name}-outline`"
-        class="group-hover:text-primary-content"
-        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
-      >
-      </ion-icon>
-    </div>
-  </template>
-</div>
-
-</footer>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-  window.lightTheme =  null 
-  window.darkTheme =  null 
-</script>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
-
-  
-  
-  <script src="/js/grid.js"></script>
-
-
-
-
-<script src="/js/main.js"></script>
-
-    
-
-
-
-
-
-    
-
-    
-
-    
-
-    
-
-    <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
-  </body>
+    </body>
 </html>

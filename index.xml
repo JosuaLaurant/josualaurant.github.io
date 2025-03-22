@@ -2,17 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>My New Hugo Site</title>
-    <link>http://localhost:1313/</link>
+    <link>https://example.org/</link>
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Mar 2025 18:19:30 +0900</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Mar 2025 19:43:43 +0900</lastBuildDate>
+    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo로 블로그 만들기</title>
+      <link>https://example.org/posts/2/</link>
+      <pubDate>Sat, 22 Mar 2025 19:43:43 +0900</pubDate>
+      <guid>https://example.org/posts/2/</guid>
+      <description>들어가면서 사실 현재 보이는 결과물 이전에 사실 수차례의 블로그를 만드려는 시도가 있었다.&#xA;당장 초등학생 때부터 다음이나 네이버 블로그를 사용하고 있었지만&#xA;개발을 시작하면서 특정 사이트의 블로그가 아니라 직접 만든 블로그를 써보고 싶었고&#xA;어떤 방식으로 / 어떻게 관리할 것인지 엄청나게 고민했었다.&#xA;실제로 첫 시도를 했던 건 아마 16년인데 (github에 16년도에 지킬이 어쩌구 하는 repository가 있음)&#xA;정작 현재 이 글이 작성되고 있는 Hugo와 Github Pages를 이용한 블로그가 세상 밖으로 나온 첫 블로그다&amp;hellip;&#xA;매번 고민하면서 어떤 기술을 사용할 지 고민하다가 그만두기를 반복하다가</description>
+    </item>
     <item>
       <title>미니 PC 구입</title>
-      <link>http://localhost:1313/posts/1/</link>
+      <link>https://example.org/posts/1/</link>
       <pubDate>Sat, 22 Mar 2025 18:19:30 +0900</pubDate>
-      <guid>http://localhost:1313/posts/1/</guid>
+      <guid>https://example.org/posts/1/</guid>
       <description>주문하기까지 십덕 슬랙에서 NAS 이야기를 하던 도중에 지금 사용 중인 모델인 ds418play에서 Docker가 공식 지원하지 않는다는 말에서 미니PC 이야기가 나오게 되었다.&#xA;저번 정모에서 파티룸에 미니PC를 들고와서 유용하게 써먹었던 기억도 있고 다시 월급쟁이 생활을 시작하면서 살짝 여유가 생겨 미니PC 뽐뿌가 오게 되었는데 마침 알리익스프레스가 15주년? 이벤트로 이것저것 행사를 시작한 것&amp;hellip;&#xA;관심있다고 하자마자 N100 모델 구매 링크를 받았는데 가격이 100달러 밖에 하지 않아서 좀 솔깃했는데 이게 쿠폰 적용전 가격이고 적용하면 80달러 정도까지 떨어지는 것이었다.</description>
     </item>
   </channel>

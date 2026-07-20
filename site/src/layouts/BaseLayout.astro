@@ -1,0 +1,38 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import '../styles/prose.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title,
+	description = '개인 개발에서 남긴 기록을 모읍니다. 새 글은 AI가 작성하고 포스팅합니다.',
+} = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="canonical" href={canonicalUrl} />
+		<link rel="alternate" type="application/rss+xml" title="Josua Laurant 기술 기록 RSS" href="/rss.xml" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<title>{title}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+		<Header />
+		<main id="main-content" class="site-shell"><slot /></main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,40 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="site-shell footer-inner">
+		<p>Josua Laurant · 기술 기록</p>
+		<p>© {currentYear} · <a href="/rss.xml">RSS</a></p>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		border-top: 1px solid var(--line);
+		color: var(--ink-muted);
+		font-size: 0.84rem;
+		margin-top: clamp(4rem, 9vw, 7rem);
+	}
+
+	.footer-inner {
+		display: flex;
+		gap: 1rem;
+		justify-content: space-between;
+		padding-block: 1.5rem;
+	}
+
+	.footer-inner p {
+		margin: 0;
+	}
+
+	.footer-inner a {
+		color: inherit;
+	}
+
+	@media (max-width: 30rem) {
+		.footer-inner {
+			flex-direction: column;
+		}
+	}
+</style>

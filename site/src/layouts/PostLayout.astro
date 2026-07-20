@@ -1,0 +1,139 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getCategory, type CategorySlug } from '../lib/categories';
+import { formatDate } from '../lib/posts';
+import SummaryLabel from '../components/SummaryLabel.astro';
+
+interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	tags: string[];
+	category: CategorySlug;
+	summary: 'ai-generated' | 'direct';
+	headings: Heading[];
+}
+
+const { title, description, pubDate, updatedDate, tags, category, summary, headings } = Astro.props;
+const categoryMeta = getCategory(category);
+const tableOfContents = headings.filter((heading) => heading.depth === 2);
+---
+
+<BaseLayout title={`${title} | Josua Laurant`} description={description}>
+	<article class="post prose">
+		<header class="post-header">
+			<p class="eyebrow"><a href={`/categories/${category}/`}>{categoryMeta.label}</a></p>
+			<h1>{title}</h1>
+			<div class="summary">
+				<SummaryLabel summary={summary} />
+				<p class="description">{description}</p>
+			</div>
+			<p class="date">
+				<time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+				{updatedDate && <span> · 업데이트 {formatDate(updatedDate)}</span>}
+			</p>
+			<ul class="tags" aria-label="태그">
+				{tags.map((tag) => <li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>)}
+			</ul>
+		</header>
+		{tableOfContents.length > 0 && (
+			<nav class="toc" aria-label="글 목차">
+				<strong>목차</strong>
+				<ol>
+					{tableOfContents.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+				</ol>
+			</nav>
+		)}
+		<div class="post-body"><slot /></div>
+	</article>
+</BaseLayout>
+
+<style>
+	.post {
+		max-width: var(--article-max);
+		padding-top: clamp(3.5rem, 9vw, 7rem);
+	}
+
+	.post-header h1 {
+		font-size: clamp(2.35rem, 7vw, 4.8rem);
+		letter-spacing: -0.065em;
+		line-height: 1.04;
+		margin: 0.75rem 0 1.2rem;
+	}
+
+	.description {
+		color: var(--ink-muted);
+		font-size: clamp(1.1rem, 2.3vw, 1.35rem);
+		line-height: 1.75;
+		margin: 0;
+	}
+
+	.summary {
+		display: grid;
+		gap: 0.5rem;
+	}
+
+	.date {
+		color: var(--ink-muted);
+		font-size: 0.9rem;
+		margin: 1.3rem 0 0;
+	}
+
+	.eyebrow a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.eyebrow a:hover {
+		color: var(--accent-deep);
+		text-decoration: underline;
+		text-underline-offset: 0.22rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+		list-style: none;
+		margin: 1.1rem 0 0;
+		padding: 0;
+	}
+
+	.tags a {
+		color: var(--accent-deep);
+		font-size: 0.84rem;
+		text-decoration: none;
+	}
+
+	.toc {
+		background: var(--accent-soft);
+		border-radius: var(--radius-panel);
+		font-size: 0.92rem;
+		margin: 3rem 0;
+		padding: 1.2rem 1.3rem;
+	}
+
+	.toc ol {
+		margin: 0.65rem 0 0;
+		padding-left: 1.25rem;
+	}
+
+	.toc li + li {
+		margin-top: 0.35rem;
+	}
+
+	.toc a {
+		color: var(--ink);
+	}
+
+	.post-body {
+		padding-bottom: 1rem;
+	}
+</style>

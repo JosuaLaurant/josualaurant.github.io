@@ -1,0 +1,93 @@
+:root {
+	--canvas: #f6f5f0;
+	--surface: #fffefa;
+	--ink: #1c2231;
+	--ink-muted: #5d6473;
+	--line: #d9d9d1;
+	--line-strong: #bfc1bc;
+	--accent: #5166ad;
+	--accent-deep: #394e92;
+	--accent-soft: #e8ebf7;
+	--code-surface: #202736;
+	--code-ink: #f2f5ff;
+	--on-ink: #ffffff;
+	--ambient-accent: rgb(81 102 173 / 10%);
+	--shell-max: 76rem;
+	--article-max: 48rem;
+	--shell-padding: clamp(1.15rem, 4vw, 2.5rem);
+	--space-1: 0.25rem;
+	--space-4: 1rem;
+	--space-10: 2.5rem;
+	--space-16: 4rem;
+	--radius-inline: 0.25rem;
+	--radius-panel: 0.75rem;
+	--radius-card: 0.9rem;
+	--motion-interactive: 160ms;
+	--motion-ease: ease;
+	font-family: Pretendard, "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	color: var(--ink);
+	background: var(--canvas);
+	font-optical-sizing: auto;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	min-width: 20rem;
+	background:
+		radial-gradient(circle at 95% -10%, var(--ambient-accent), transparent 30rem),
+		var(--canvas);
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+:focus-visible {
+	outline: 3px solid var(--accent);
+	outline-offset: 3px;
+}
+
+.site-shell {
+	margin-inline: auto;
+	max-width: var(--shell-max);
+	padding-inline: var(--shell-padding);
+}
+
+.eyebrow {
+	color: var(--accent-deep);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.13em;
+	margin: 0;
+}
+
+.skip-link {
+	background: var(--ink);
+	color: var(--on-ink);
+	left: 1rem;
+	padding: 0.7rem 0.9rem;
+	position: fixed;
+	top: -5rem;
+	z-index: 10;
+}
+
+.skip-link:focus {
+	top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

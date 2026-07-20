@@ -7,6 +7,8 @@
 
 - Astro source와 공개 Markdown 원고는 `site/`에 둔다.
 - 실제 글은 `site/src/content/blog/`에 둔다.
+- 블로그 자체의 공개 변경 기록은 `site/src/content/updates/`에 버전별 Markdown으로 둔다. 이 기록은
+  일반 글 목록과 RSS에 섞지 않는다.
 - `site/DESIGN.md`는 화면 구현이 따라야 할 디자인 계약이다. `docs/blog-redesign/design.md`는 그 선택의
   배경과 변경 기록만 보관한다.
 - 블로그 설계·연재 기록은 `docs/blog-redesign/`에 둔다.

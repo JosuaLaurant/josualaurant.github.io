@@ -13,7 +13,7 @@
 	--on-ink: #ffffff;
 	--ambient-accent: rgb(81 102 173 / 10%);
 	--shell-max: 76rem;
-	--article-max: 48rem;
+	--article-max: 56rem;
 	--shell-padding: clamp(1.15rem, 4vw, 2.5rem);
 	--space-1: 0.25rem;
 	--space-4: 1rem;
@@ -51,6 +51,11 @@ body {
 img {
 	height: auto;
 	max-width: 100%;
+}
+
+:where(h1, h2, h3) {
+	overflow-wrap: anywhere;
+	word-break: keep-all;
 }
 
 :focus-visible {

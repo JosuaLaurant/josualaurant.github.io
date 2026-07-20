@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate } from '../lib/posts';
+
+const updates = (await getCollection('updates'))
+	.filter((update) => !update.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf() || b.data.version.localeCompare(a.data.version));
+---
+
+<BaseLayout title="업데이트 | Josua Laurant" description="이 블로그의 공개 변경 기록입니다.">
+	<section class="updates-page" aria-labelledby="updates-title">
+		<p class="eyebrow">CHANGELOG</p>
+		<h1 id="updates-title">업데이트</h1>
+		<p class="lede">이 블로그 자체에 적용한 변경을 버전별로 남깁니다.</p>
+		<ol class="update-list">
+			{updates.map((update) => (
+				<li>
+					<article>
+						<header>
+							<p class="version">{update.data.version}</p>
+							<time datetime={update.data.pubDate.toISOString()}>{formatDate(update.data.pubDate)}</time>
+						</header>
+						<h2>{update.data.title}</h2>
+						<ul>
+							{update.data.changes.map((change) => <li>{change}</li>)}
+						</ul>
+					</article>
+				</li>
+			))}
+		</ol>
+	</section>
+</BaseLayout>
+
+<style>
+	.updates-page {
+		margin-inline: auto;
+		max-width: var(--article-max);
+		padding-top: clamp(3.5rem, 9vw, 7rem);
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 7vw, 4.8rem);
+		letter-spacing: -0.065em;
+		margin: 0.6rem 0;
+	}
+
+	.lede {
+		color: var(--ink-muted);
+		font-size: 1.1rem;
+		line-height: 1.7;
+		margin: 0;
+	}
+
+	.update-list {
+		border-top: 1px solid var(--line);
+		list-style: none;
+		margin: 2.8rem 0 0;
+		padding: 0;
+	}
+
+	.update-list > li {
+		border-bottom: 1px solid var(--line);
+		padding: 2rem 0 2.3rem;
+	}
+
+	article header {
+		align-items: baseline;
+		display: flex;
+		gap: 0.75rem;
+		justify-content: space-between;
+	}
+
+	.version {
+		color: var(--accent-deep);
+		font-size: 0.78rem;
+		font-weight: 800;
+		letter-spacing: 0.08em;
+		margin: 0;
+	}
+
+	time {
+		color: var(--ink-muted);
+		font-size: 0.86rem;
+	}
+
+	h2 {
+		font-size: clamp(1.45rem, 3vw, 1.9rem);
+		letter-spacing: -0.045em;
+		margin: 0.7rem 0 1rem;
+	}
+
+	ul {
+		color: var(--ink-muted);
+		line-height: 1.75;
+		margin: 0;
+		padding-left: 1.25rem;
+	}
+
+	li + li {
+		margin-top: 0.35rem;
+	}
+
+	@media (max-width: 30rem) {
+		article header {
+			align-items: start;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	}
+</style>

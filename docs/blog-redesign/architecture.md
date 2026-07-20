@@ -1,6 +1,6 @@
 # ADR-001: 한 저장소 Astro 기술 블로그
 
-> 상태: 제안됨 · 작성일: 2026-07-21 · 적용 대상: `JosuaLaurant/josualaurant.github.io`
+> 상태: 채택됨 · 작성일: 2026-07-21 · 적용 대상: `JosuaLaurant/josualaurant.github.io`
 
 ## 결정
 
@@ -35,10 +35,11 @@
 │   ├── src/
 │   │   ├── components/         # Header, Footer, ArticleCard, TableOfContents
 │   │   ├── content/
-│   │   │   └── blog/           # 공개 글: Markdown 또는 MDX
+│   │   │   ├── blog/           # 공개 글: Markdown 또는 MDX
+│   │   │   └── updates/        # 블로그 자체의 versioned changelog
 │   │   └── content.config.ts   # frontmatter schema
 │   │   ├── layouts/            # BaseLayout, PostLayout
-│   │   ├── pages/              # /, /posts/[...slug], /categories/[category], /tags/[tag], /about, /404
+│   │   ├── pages/              # /, /posts/[...slug], /categories/[category], /tags/[tag], /updates, /about, /404
 │   │   ├── styles/             # global.css, prose.css
 │   │   └── assets/             # 직접 만든 다이어그램·커버 이미지
 │   ├── public/                 # favicon, 검증된 정적 파일만
@@ -77,7 +78,8 @@ series: building-the-blog # 선택
 | `/posts/<slug>/` | 본문, 목차, 태그, 이전·다음 글 |
 | `/categories/<category>/` | 주제별 글 목록 |
 | `/tags/<tag>/` | 태그별 글 목록 |
-| `/about/` | 블로그의 범위와 공개 원칙 |
+| `/updates/` | 블로그 자체의 versioned changelog |
+| `/about/` | 블로그의 범위와 공개 원칙 (현재 header에서 비노출) |
 | `/rss.xml` | 구독 피드 |
 | `/404/` | 정적 404 |
 
@@ -92,6 +94,11 @@ series: building-the-blog # 선택
 작성 방식을 보관하는 메타데이터다. 새 글의 작성과 포스팅은 AI가 진행하며, 직접 쓴 글은 별도 source나
 별도 블로그로 떼어 내지 않는다. `summary`는 카드·글 머리말의 description 출처다. `ai-generated`이면
 화면에 `✦ AI 요약`을 표시하고, 직접 쓴 설명은 `direct`로 둔다.
+
+블로그 자체의 변경은 일반 post가 아니라 `site/src/content/updates/v<major>.<minor>.<patch>.md`에 남긴다.
+업데이트 entry는 `version`, `title`, `pubDate`, `changes`를 갖고 `/updates/`에서 최신 버전부터 표시한다.
+작은 디자인·문구·의존성 보정은 patch, 새 탐색·콘텐츠 구조처럼 독자가 느끼는 기능 추가는 minor로 올린다.
+초기 공개는 `v0.1.0`으로 고정한다. 이 collection은 메인 글 목록·태그·RSS에 넣지 않는다.
 
 기존 Hugo의 `/posts/1/`, `/posts/2/`는 Astro 콘텐츠의 같은 ID로 정적 생성한다. 따라서 옛 링크를
 redirect하지 않고 유지하면서 `직접 쓴 글`의 첫 기록으로 보여 준다.

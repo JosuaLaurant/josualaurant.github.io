@@ -44,6 +44,9 @@ Apple식 인터랙션 원칙을 시각 스타일로 복제하지 않고, 읽기 
 | 직접적인 wayfinding | home의 `첫 기록 읽기`를 실제 목적에 맞는 `최근 글 보기`로 바꾸고, 글 카드의 내부 링크 표시는 `→`로 통일했다. |
 | 즉각적인 press feedback | header, 홈의 주제·태그 카드, 글 카드 링크가 pointer down에서 색상·표면·경계로 즉시 반응한다. |
 | 요약의 출처 표시 | AI가 쓴 description에는 카드와 글 머리말에서 `✦ AI 요약`을 표시하고, 원문의 작성 방식과 요약의 출처를 혼동하지 않는다. |
+| 넓은 화면 읽기 정렬 | 글은 1920px viewport에서 56rem까지 넓히되 공통 shell 중앙에 둔다. 소개·주제 목록도 각 읽기 폭을 중앙에 두고, 홈만 넓은 목록 폭을 유지한다. |
+| 한글 제목 줄바꿈 | `word-break: keep-all`로 한글 단어를 보존하고, 화면보다 긴 URL·식별자만 `overflow-wrap`으로 예외 처리한다. |
+| 블로그 업데이트 로그 | 소개 링크 대신 `/updates/`를 헤더에 두고, 일반 글·RSS와 분리한 versioned changelog로 공개 변경을 기록한다. |
 
 드래그 물리, 관성·spring, sheet·carousel, glass blur는 현재 정적 블로그에 조작 목적이 없고 읽기 흐름을
 해칠 수 있어 채택하지 않는다. hover는 보조 피드백으로만 유지하며, 키보드 focus와 reduced motion 규칙은

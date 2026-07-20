@@ -1,10 +1,14 @@
+---
+const isUpdatesPage = Astro.url.pathname === '/updates/';
+---
+
 <header class="site-header">
 	<div class="site-shell header-inner">
 		<a class="brand" href="/" aria-label="Josua Laurant 홈">Josua Laurant</a>
-	<nav aria-label="주요 메뉴">
+		<nav aria-label="주요 메뉴">
 			<a href="/#categories">주제</a>
 			<a href="/categories/direct/">직접 쓴 글</a>
-			<a href="/about/">소개</a>
+			<a href="/updates/" aria-current={isUpdatesPage ? 'page' : undefined}>업데이트</a>
 			<a href="/rss.xml">RSS</a>
 		</nav>
 	</div>
@@ -32,7 +36,7 @@
 
 	nav {
 		display: flex;
-		gap: 1rem;
+		gap: clamp(0.55rem, 2vw, 1rem);
 	}
 
 	nav a {
@@ -51,5 +55,19 @@
 	.brand:active,
 	nav a:active {
 		color: var(--accent-deep);
+	}
+
+	@media (max-width: 24rem) {
+		.header-inner {
+			gap: 0.7rem;
+		}
+
+		.brand {
+			font-size: 0.98rem;
+		}
+
+		nav a {
+			font-size: 0.84rem;
+		}
 	}
 </style>

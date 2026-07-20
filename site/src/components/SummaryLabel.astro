@@ -1,0 +1,23 @@
+---
+interface Props {
+	summary: 'ai-generated' | 'direct';
+}
+
+const { summary } = Astro.props;
+---
+
+{summary === 'ai-generated' && (
+	<span class="summary-label"><span aria-hidden="true">✦</span> AI 요약</span>
+)}
+
+<style>
+	.summary-label {
+		color: var(--accent-deep);
+		display: inline-flex;
+		font-size: 0.72rem;
+		font-weight: 800;
+		gap: 0.3rem;
+		letter-spacing: 0.08em;
+		line-height: 1.2;
+	}
+</style>

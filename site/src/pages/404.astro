@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="찾을 수 없는 페이지 | Josua Laurant" description="요청한 페이지가 없습니다.">
+	<section class="not-found">
+		<p class="eyebrow">404</p>
+		<h1>여기에는 아직<br />기록이 없습니다.</h1>
+		<p>주소가 바뀌었거나 아직 공개되지 않은 글일 수 있습니다.</p>
+		<a href="/">홈으로 돌아가기</a>
+	</section>
+</BaseLayout>
+
+<style>
+	.not-found {
+		max-width: 40rem;
+		padding-top: clamp(4rem, 13vw, 10rem);
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 8vw, 5.2rem);
+		letter-spacing: -0.07em;
+		line-height: 1;
+		margin: 0.75rem 0 1.3rem;
+	}
+
+	p:not(.eyebrow) {
+		color: var(--ink-muted);
+		font-size: 1.1rem;
+	}
+
+	a {
+		color: var(--ink);
+		display: inline-block;
+		font-weight: 700;
+		margin-top: 0.8rem;
+		text-underline-offset: 0.24rem;
+	}
+</style>

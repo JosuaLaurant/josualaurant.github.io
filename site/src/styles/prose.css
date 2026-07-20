@@ -1,0 +1,69 @@
+.prose {
+	line-height: 1.82;
+}
+
+.prose :where(h2, h3) {
+	letter-spacing: -0.04em;
+	line-height: 1.22;
+	scroll-margin-top: 1.5rem;
+}
+
+.prose :where(h2) {
+	font-size: clamp(1.6rem, 4vw, 2.15rem);
+	margin-top: 3.4rem;
+}
+
+.prose :where(h3) {
+	font-size: 1.3rem;
+	margin-top: 2.4rem;
+}
+
+.prose :where(p, li) {
+	font-size: 1.04rem;
+}
+
+.prose :where(p, ul, ol, pre, blockquote) {
+	margin-block: 1.2rem;
+}
+
+.prose :where(ul, ol) {
+	padding-left: 1.3rem;
+}
+
+.prose :where(li + li) {
+	margin-top: 0.45rem;
+}
+
+.prose :where(a) {
+	color: var(--accent-deep);
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.16em;
+}
+
+.prose :where(code) {
+	background: var(--accent-soft);
+	border-radius: var(--radius-inline);
+	font-family: "SFMono-Regular", Consolas, monospace;
+	font-size: 0.9em;
+	padding: 0.12em 0.3em;
+}
+
+.prose :where(pre) {
+	background: var(--code-surface);
+	border-radius: var(--radius-panel);
+	color: var(--code-ink);
+	overflow-x: auto;
+	padding: 1rem 1.15rem;
+}
+
+.prose :where(pre code) {
+	background: transparent;
+	padding: 0;
+}
+
+.prose :where(blockquote) {
+	border-left: 3px solid var(--accent);
+	color: var(--ink-muted);
+	margin-left: 0;
+	padding-left: 1rem;
+}

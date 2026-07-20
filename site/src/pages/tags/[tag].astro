@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	const postsByTag = new Map<string, typeof posts>();
+
+	for (const post of posts) {
+		for (const tag of post.data.tags) {
+			postsByTag.set(tag, [...(postsByTag.get(tag) ?? []), post]);
+		}
+	}
+
+	return [...postsByTag].map(([tag, taggedPosts]) => ({
+		params: { tag },
+		props: { tag, posts: taggedPosts },
+	}));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag} | Josua Laurant`} description={`${tag} 태그의 기술 기록입니다.`}>
+	<section class="tag-page" aria-labelledby="tag-title">
+		<p class="eyebrow">TOPIC</p>
+		<h1 id="tag-title">#{tag}</h1>
+		<p>{posts.length}개의 글</p>
+		<div class="post-list">{posts.map((post) => <PostCard post={post} />)}</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.tag-page {
+		padding-top: clamp(3.5rem, 9vw, 7rem);
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 7vw, 4.8rem);
+		letter-spacing: -0.065em;
+		margin: 0.6rem 0;
+	}
+
+	.tag-page > p:not(.eyebrow) {
+		color: var(--ink-muted);
+		margin: 0;
+	}
+
+	.post-list {
+		display: grid;
+		gap: 0.9rem;
+		margin-top: 2.5rem;
+		max-width: 55rem;
+	}
+</style>

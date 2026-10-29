@@ -98,6 +98,8 @@ margin·padding·gap을 이 scale 또는 문서화한 `clamp()` 값으로 옮긴
   블로그 자체의 versioned changelog로 이동하며, 일반 글·RSS 탐색과 섞지 않는다.
 - Theme toggle: 헤더 탐색 끝의 2rem 원형 아이콘 버튼이다. `aria-label="어두운 화면"`과 `aria-pressed`로
   상태를 알리고, 라이트에서는 달·다크에서는 해 아이콘을 보인다.
+- Comments: 글 본문 뒤에 구분선과 `댓글` 섹션 제목, 저장 위치 안내를 두고 giscus를 lazy load한다.
+  댓글 창 테마는 `public/giscus/{light,dark}.css`가 이 문서의 토큰으로 덮어쓰며 사이트 테마를 따라간다.
 - PostCard: 제목이 첫 번째·주요 링크이며 태그는 독립 링크다. 카드 전체를 링크로 감싸지 않는다.
 - Summary provenance: `description`이 AI 생성 요약이면 설명 바로 앞에 `✦ AI 요약`을 표시한다. 이 표기는
   장식성 eyebrow가 아니라 요약의 출처를 밝히는 정보다. 직접 쓴 설명에는 표시하지 않는다.

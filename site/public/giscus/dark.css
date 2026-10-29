@@ -1,0 +1,31 @@
+/* giscus 기본 dark 테마 위에 블로그 다크 토큰(site/DESIGN.md)을 덮어쓴다. */
+@import url('https://giscus.app/themes/dark.css');
+
+main {
+	--color-fg-default: #ece9df;
+	--color-fg-muted: #a8a59a;
+	--color-fg-subtle: #a8a59a;
+	--color-canvas-default: #201f1a;
+	--color-canvas-overlay: #201f1a;
+	--color-canvas-inset: #171612;
+	--color-canvas-subtle: #171612;
+	--color-border-default: #34322b;
+	--color-border-muted: #34322b;
+	--color-accent-fg: #a9b7f2;
+	--color-accent-emphasis: #8d9ee0;
+	--color-accent-muted: #8d9ee066;
+	--color-accent-subtle: #262a3b;
+	--color-btn-text: #ece9df;
+	--color-btn-bg: #262520;
+	--color-btn-border: #4a473e;
+	--color-btn-hover-bg: #2e2c26;
+	--color-btn-primary-text: #171612;
+	--color-btn-primary-bg: #a9b7f2;
+	--color-btn-primary-hover-bg: #8d9ee0;
+	--color-btn-primary-disabled-bg: #4a5170;
+	--color-segmented-control-bg: #171612;
+	--color-segmented-control-button-bg: #262520;
+	--color-scale-gray-1: #2e2c26;
+	--color-scale-blue-1: #262a3b;
+	font-family: Pretendard, 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}

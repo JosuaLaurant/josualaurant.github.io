@@ -7,11 +7,13 @@ import '../styles/prose.css';
 interface Props {
 	title: string;
 	description?: string;
+	type?: 'website' | 'article';
 }
 
 const {
 	title,
 	description = '개인 개발에서 남긴 기록을 모읍니다. 새 글은 AI가 작성하고 포스팅합니다.',
+	type = 'website',
 } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 ---
@@ -23,7 +25,16 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="google-site-verification" content="_EZEodFLexqSFVLF8-1KGHgdycsxDUzN4owhxBzmek8" />
 		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:site_name" content="Josua Laurant" />
+		<meta property="og:locale" content="ko_KR" />
+		<meta property="og:type" content={type} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta name="twitter:card" content="summary" />
+		<slot name="head" />
 		<link rel="alternate" type="application/rss+xml" title="Josua Laurant 기술 기록 RSS" href="/rss.xml" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />

@@ -11,7 +11,6 @@
 	--code-surface: #202736;
 	--code-ink: #f2f5ff;
 	--on-ink: #ffffff;
-	--ambient-accent: rgb(81 102 173 / 10%);
 	color-scheme: light;
 	--shell-max: 76rem;
 	--article-max: 42rem;
@@ -47,8 +46,7 @@
 		--code-surface: #10131b;
 		--code-ink: #e6eaf7;
 		--on-ink: #171612;
-		--ambient-accent: rgb(141 158 224 / 7%);
-		color-scheme: dark;
+			color-scheme: dark;
 	}
 }
 
@@ -65,7 +63,6 @@
 	--code-surface: #10131b;
 	--code-ink: #e6eaf7;
 	--on-ink: #171612;
-	--ambient-accent: rgb(141 158 224 / 7%);
 	color-scheme: dark;
 }
 
@@ -82,9 +79,7 @@ body {
 	min-width: 20rem;
 	overflow-wrap: break-word;
 	word-break: keep-all;
-	background:
-		radial-gradient(circle at 95% -10%, var(--ambient-accent), transparent 30rem),
-		var(--canvas);
+	background: var(--canvas);
 }
 
 img {

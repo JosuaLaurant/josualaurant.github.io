@@ -10,9 +10,31 @@ const isUpdatesPage = Astro.url.pathname === '/updates/';
 			<a href="/categories/direct/">직접 쓴 글</a>
 			<a href="/updates/" aria-current={isUpdatesPage ? 'page' : undefined}>업데이트</a>
 			<a href="/rss.xml">RSS</a>
+			<button class="theme-toggle" type="button" aria-label="어두운 화면" aria-pressed="false">
+				<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" /></svg>
+				<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" /></svg>
+			</button>
 		</nav>
 	</div>
 </header>
+
+<script>
+	const toggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
+	const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+	const isDark = () => (document.documentElement.dataset.theme ?? (darkQuery.matches ? 'dark' : 'light')) === 'dark';
+	const sync = () => toggle?.setAttribute('aria-pressed', String(isDark()));
+
+	sync();
+	darkQuery.addEventListener('change', sync);
+	toggle?.addEventListener('click', () => {
+		const theme = isDark() ? 'light' : 'dark';
+		document.documentElement.dataset.theme = theme;
+		try {
+			localStorage.setItem('theme', theme);
+		} catch {}
+		sync();
+	});
+</script>
 
 <style>
 	.site-header {
@@ -35,8 +57,47 @@ const isUpdatesPage = Astro.url.pathname === '/updates/';
 	}
 
 	nav {
+		align-items: center;
 		display: flex;
 		gap: clamp(0.55rem, 2vw, 1rem);
+	}
+
+	.theme-toggle {
+		align-items: center;
+		background: none;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		color: var(--ink-muted);
+		cursor: pointer;
+		display: inline-flex;
+		height: 2rem;
+		justify-content: center;
+		padding: 0;
+		width: 2rem;
+	}
+
+	.theme-toggle:hover {
+		border-color: var(--line-strong);
+		color: var(--ink);
+	}
+
+	.theme-toggle:active {
+		color: var(--accent-deep);
+	}
+
+	.theme-toggle svg {
+		fill: none;
+		height: 1rem;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.8;
+		width: 1rem;
+	}
+
+	.theme-toggle[aria-pressed='true'] .icon-moon,
+	.theme-toggle[aria-pressed='false'] .icon-sun {
+		display: none;
 	}
 
 	nav a {
@@ -46,7 +107,7 @@ const isUpdatesPage = Astro.url.pathname === '/updates/';
 		text-decoration: none;
 	}
 
-		nav a:hover {
+	nav a:hover {
 		color: var(--ink);
 		text-decoration: underline;
 		text-underline-offset: 0.22rem;

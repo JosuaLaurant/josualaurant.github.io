@@ -32,6 +32,30 @@
 `--ink`/`--canvas`는 14.55:1, `--ink-muted`/`--canvas`는 5.44:1 이상의 대비를 확보한다. 색상만으로
 링크·현재 상태·의미를 구분하지 않는다.
 
+### 다크 모드
+
+밤에 켠 스탠드 아래의 같은 종이다. 푸른 검정이 아니라 따뜻한 먹색을 바탕으로 쓰고, 인디고는 밝혀서
+같은 역할을 유지한다. 같은 변수 이름을 다시 정의하며, 컴포넌트는 색상 값을 직접 쓰지 않는다.
+
+| CSS 변수 | 다크 값 |
+| --- | --- |
+| `--canvas` | `#171612` |
+| `--surface` | `#201f1a` |
+| `--ink` | `#ece9df` |
+| `--ink-muted` | `#a8a59a` |
+| `--line` | `#34322b` |
+| `--line-strong` | `#4a473e` |
+| `--accent` | `#8d9ee0` |
+| `--accent-deep` | `#a9b7f2` |
+| `--accent-soft` | `#262a3b` |
+| `--code-surface` | `#10131b` |
+| `--code-ink` | `#e6eaf7` |
+| `--on-ink` | `#171612` |
+
+기본값은 시스템 설정(`prefers-color-scheme`)을 따른다. 헤더의 테마 버튼으로 바꾸면 `html[data-theme]`과
+`localStorage`의 `theme`에 저장하고, `<head>`의 inline script가 첫 paint 전에 복원한다. storage를 쓸 수
+없으면 시스템 설정으로 돌아간다. 코드 블록은 두 모드 모두 어두운 표면을 유지한다.
+
 ## 3. 타이포그래피
 
 - 기본 글꼴: `Pretendard`, `Apple SD Gothic Neo`, 시스템 sans-serif. 웹폰트를 별도 내려받지 않는다.
@@ -72,6 +96,8 @@ margin·padding·gap을 이 scale 또는 문서화한 `clamp()` 값으로 옮긴
 
 - Header: 사이트명은 홈 링크다. 전용 현재 경로가 있는 탐색만 `aria-current`로 표시한다. `업데이트`는
   블로그 자체의 versioned changelog로 이동하며, 일반 글·RSS 탐색과 섞지 않는다.
+- Theme toggle: 헤더 탐색 끝의 2rem 원형 아이콘 버튼이다. `aria-label="어두운 화면"`과 `aria-pressed`로
+  상태를 알리고, 라이트에서는 달·다크에서는 해 아이콘을 보인다.
 - PostCard: 제목이 첫 번째·주요 링크이며 태그는 독립 링크다. 카드 전체를 링크로 감싸지 않는다.
 - Summary provenance: `description`이 AI 생성 요약이면 설명 바로 앞에 `✦ AI 요약`을 표시한다. 이 표기는
   장식성 eyebrow가 아니라 요약의 출처를 밝히는 정보다. 직접 쓴 설명에는 표시하지 않는다.

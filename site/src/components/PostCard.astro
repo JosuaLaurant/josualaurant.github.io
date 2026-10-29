@@ -2,7 +2,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCategory } from '../lib/categories';
 import { formatDate } from '../lib/posts';
-import SummaryLabel from './SummaryLabel.astro';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
@@ -15,13 +14,12 @@ const category = getCategory(post.data.category);
 <article class="post-card">
 	<div class="post-meta">
 		<a href={`/categories/${post.data.category}/`}>{category.label}</a>
+		<span aria-hidden="true">·</span>
 		<time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+		{post.data.writing === 'ai-authored' && <span class="writing">✦ AI 작성</span>}
 	</div>
 	<h3><a href={`/posts/${post.id}/`}>{post.data.title}</a></h3>
-	<div class="summary">
-		<SummaryLabel summary={post.data.summary} />
-		<p>{post.data.description}</p>
-	</div>
+	<p class="description">{post.data.description}</p>
 	<ul aria-label="태그">
 		{post.data.tags.map((tag) => (
 			<li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>
@@ -44,18 +42,17 @@ const category = getCategory(post.data.category);
 	}
 
 	.post-meta {
+		align-items: center;
+		color: var(--ink-muted);
 		display: flex;
+		flex-wrap: wrap;
 		font-size: 0.8rem;
 		gap: 0.4rem;
 		letter-spacing: 0.01em;
 	}
 
-	.post-meta a,
-	.post-meta time {
-		color: var(--ink-muted);
-	}
-
 	.post-meta a {
+		color: var(--ink-muted);
 		font-weight: 700;
 		text-decoration: none;
 	}
@@ -64,6 +61,12 @@ const category = getCategory(post.data.category);
 		color: var(--accent-deep);
 		text-decoration: underline;
 		text-underline-offset: 0.2rem;
+	}
+
+	.writing {
+		color: var(--accent-deep);
+		font-weight: 700;
+		margin-left: 0.35rem;
 	}
 
 	h3 {
@@ -88,12 +91,7 @@ const category = getCategory(post.data.category);
 		color: var(--accent-deep);
 	}
 
-	.summary {
-		display: grid;
-		gap: 0.35rem;
-	}
-
-	.summary p {
+	.description {
 		color: var(--ink-muted);
 		line-height: 1.7;
 		margin: 0;
@@ -102,16 +100,19 @@ const category = getCategory(post.data.category);
 	ul {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		gap: 0 0.75rem;
 		list-style: none;
-		margin: 1.15rem 0 0;
+		margin: 0.8rem 0 0;
 		padding: 0;
 	}
 
 	li a {
+		align-items: center;
 		color: var(--accent-deep);
-		font-size: 0.8rem;
+		display: inline-flex;
+		font-size: 0.84rem;
 		letter-spacing: 0.01em;
+		min-height: 1.75rem;
 		text-decoration: none;
 	}
 

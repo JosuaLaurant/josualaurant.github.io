@@ -56,6 +56,11 @@
 	padding: 1rem 1.15rem;
 }
 
+/* Shiki가 inline style로 넣는 테마 배경 대신 블로그 코드 표면을 쓴다. */
+.prose pre.astro-code {
+	background-color: var(--code-surface) !important;
+}
+
 .prose :where(pre code) {
 	background: transparent;
 	padding: 0;

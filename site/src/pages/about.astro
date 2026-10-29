@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="소개 | Josua Laurant" description="이 블로그가 다루는 범위와 기록 원칙입니다.">
 	<article class="about prose">
-		<p class="eyebrow">ABOUT</p>
+		<p class="eyebrow">소개</p>
 		<h1>결과보다 과정을<br />정확하게 남깁니다.</h1>
 		<p>
 			이곳은 소프트웨어를 만들고, 문제를 측정하고, 개선하며 얻은 기술 기록을 모읍니다.
@@ -17,13 +17,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 			<li>비공개 이미지, 원문, prompt, 서버 정보와 파일 경로는 공개하지 않습니다.</li>
 			<li>필요한 예시는 합성 fixture나 재현 가능한 도식으로 바꿉니다.</li>
 		</ul>
+		<h2>쓰는 사람</h2>
+		<p>
+			Josua Laurant입니다. 이 블로그의 글감은 개인적으로 만들고 있는 프로젝트에서 나옵니다. 코드와
+			블로그 소스는 <a href="https://github.com/JosuaLaurant">GitHub</a>에 있고, 글에 대한 의견은 각 글
+			아래 댓글로 남길 수 있습니다.
+		</p>
 	</article>
 </BaseLayout>
 
 <style>
 	.about {
 		margin-inline: auto;
-		max-width: 44rem;
+		max-width: var(--article-max);
 		padding-top: clamp(3.5rem, 9vw, 7rem);
 	}
 

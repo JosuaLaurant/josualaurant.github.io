@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedCategories } from '../../lib/categories';
+import { getPublishedPosts } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+const categories = getPublishedCategories(posts);
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort((a, b) => a.localeCompare(b, 'ko'));
+---
+
+<BaseLayout title="주제 | Josua Laurant" description="글을 주제와 태그로 찾아봅니다.">
+	<section class="topics-page" aria-labelledby="topics-title">
+		<h1 id="topics-title">주제</h1>
+		<p class="lede">각 글은 주제 하나에 속하고, 태그로 더 좁혀 찾을 수 있습니다.</p>
+		<ul class="category-list">
+			{categories.map((category) => (
+				<li>
+					<a href={`/categories/${category.slug}/`}>
+						<strong>{category.label}</strong>
+						<span>{category.description}</span>
+					</a>
+					<small>{category.posts.length}개의 글</small>
+				</li>
+			))}
+		</ul>
+		<h2>태그</h2>
+		<ul class="tag-list">
+			{tags.map((tag) => (
+				<li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>
+			))}
+		</ul>
+	</section>
+</BaseLayout>
+
+<style>
+	.topics-page {
+		margin-inline: auto;
+		max-width: var(--article-max);
+		padding-top: clamp(3.5rem, 9vw, 6rem);
+	}
+
+	h1 {
+		font-size: clamp(2.2rem, 6vw, 3.6rem);
+		letter-spacing: -0.055em;
+		line-height: 1.1;
+		margin: 0;
+	}
+
+	.lede {
+		color: var(--ink-muted);
+		font-size: 1.05rem;
+		line-height: 1.7;
+		margin: 0.8rem 0 0;
+	}
+
+	.category-list,
+	.tag-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.category-list {
+		border-top: 1px solid var(--line);
+		margin-top: 2rem;
+	}
+
+	.category-list li {
+		align-items: baseline;
+		border-bottom: 1px solid var(--line);
+		display: flex;
+		gap: 1rem;
+		justify-content: space-between;
+		padding: 1.1rem 0;
+	}
+
+	.category-list a {
+		color: var(--ink);
+		display: grid;
+		gap: 0.3rem;
+		text-decoration: none;
+	}
+
+	.category-list strong {
+		font-size: 1.15rem;
+		letter-spacing: -0.03em;
+	}
+
+	.category-list a:hover strong {
+		color: var(--accent-deep);
+		text-decoration: underline;
+		text-underline-offset: 0.22rem;
+	}
+
+	.category-list a:active strong {
+		color: var(--accent-deep);
+	}
+
+	.category-list span,
+	.category-list small {
+		color: var(--ink-muted);
+		line-height: 1.6;
+	}
+
+	.category-list small {
+		flex: none;
+		font-size: 0.84rem;
+	}
+
+	h2 {
+		font-size: clamp(1.4rem, 3vw, 1.8rem);
+		letter-spacing: -0.04em;
+		margin: 2.8rem 0 1rem;
+	}
+
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.tag-list a {
+		align-items: center;
+		border: 1px solid var(--line-strong);
+		border-radius: 99rem;
+		color: var(--ink);
+		display: inline-flex;
+		min-height: 2.25rem;
+		padding: 0 0.85rem;
+		text-decoration: none;
+	}
+
+	.tag-list a:hover {
+		background: var(--accent-soft);
+	}
+
+	.tag-list a:active {
+		border-color: var(--accent-deep);
+		color: var(--accent-deep);
+	}
+</style>

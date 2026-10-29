@@ -1,4 +1,4 @@
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getPublishedPosts() {
 	return (await getCollection('blog'))
@@ -12,4 +12,12 @@ export function formatDate(date: Date) {
 		month: 'long',
 		day: 'numeric',
 	}).format(date);
+}
+
+export function getPostNeighbors(posts: CollectionEntry<'blog'>[], id: string) {
+	const index = posts.findIndex((post) => post.id === id);
+	return {
+		newer: index > 0 ? posts[index - 1] : undefined,
+		older: index >= 0 && index < posts.length - 1 ? posts[index + 1] : undefined,
+	};
 }

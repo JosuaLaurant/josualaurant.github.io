@@ -14,7 +14,7 @@
 	--ambient-accent: rgb(81 102 173 / 10%);
 	color-scheme: light;
 	--shell-max: 76rem;
-	--article-max: 56rem;
+	--article-max: 42rem;
 	--shell-padding: clamp(1.15rem, 4vw, 2.5rem);
 	--space-1: 0.25rem;
 	--space-4: 1rem;
@@ -110,7 +110,7 @@ img {
 	color: var(--accent-deep);
 	font-size: 0.72rem;
 	font-weight: 800;
-	letter-spacing: 0.13em;
+	letter-spacing: 0.04em;
 	margin: 0;
 }
 

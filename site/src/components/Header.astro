@@ -39,7 +39,8 @@ const current = (active: boolean) => (active ? 'page' : undefined);
 
 <style>
 	.site-header {
-		border-bottom: 1px solid var(--line);
+		position: relative;
+		z-index: 2;
 	}
 
 	.header-inner {
@@ -50,7 +51,7 @@ const current = (active: boolean) => (active ? 'page' : undefined);
 	}
 
 	.brand {
-		color: var(--ink);
+		color: var(--desk-ink);
 		font-size: 1.05rem;
 		font-weight: 800;
 		letter-spacing: -0.045em;
@@ -65,8 +66,8 @@ const current = (active: boolean) => (active ? 'page' : undefined);
 
 	.theme-toggle {
 		align-items: center;
-		background: none;
-		border: 1px solid var(--line);
+		background: var(--paper);
+		border: 1px solid var(--paper-edge);
 		border-radius: 999px;
 		color: var(--ink-muted);
 		cursor: pointer;
@@ -102,21 +103,22 @@ const current = (active: boolean) => (active ? 'page' : undefined);
 	}
 
 	nav a {
-		color: var(--ink-muted);
+		color: var(--desk-ink);
+		opacity: 0.82;
 		font-size: 0.92rem;
 		letter-spacing: 0.01em;
 		text-decoration: none;
 	}
 
 	nav a:hover {
-		color: var(--ink);
+		opacity: 1;
 		text-decoration: underline;
 		text-underline-offset: 0.22rem;
 	}
 
 	nav a[aria-current] {
-		color: var(--ink);
-		font-weight: 700;
+		font-weight: 800;
+		opacity: 1;
 	}
 
 	.brand:active,

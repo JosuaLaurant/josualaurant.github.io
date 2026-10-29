@@ -2,26 +2,26 @@
 @import url('https://giscus.app/themes/light.css');
 
 main {
-	--color-fg-default: #1c2231;
-	--color-fg-muted: #5d6473;
-	--color-fg-subtle: #5d6473;
-	--color-canvas-default: #fffefa;
-	--color-canvas-overlay: #fffefa;
-	--color-canvas-inset: #f6f5f0;
-	--color-canvas-subtle: #f6f5f0;
-	--color-border-default: #d9d9d1;
-	--color-border-muted: #d9d9d1;
-	--color-accent-fg: #394e92;
-	--color-accent-emphasis: #5166ad;
-	--color-accent-muted: #5166ad66;
-	--color-accent-subtle: #e8ebf7;
-	--color-btn-bg: #f6f5f0;
-	--color-btn-hover-bg: #efeee8;
-	--color-btn-primary-bg: #394e92;
-	--color-btn-primary-hover-bg: #5166ad;
+	--color-fg-default: #1f2433;
+	--color-fg-muted: #5b6070;
+	--color-fg-subtle: #5b6070;
+	--color-canvas-default: #fffdf6;
+	--color-canvas-overlay: #fffdf6;
+	--color-canvas-inset: #f7f1e3;
+	--color-canvas-subtle: #f7f1e3;
+	--color-border-default: #e2d6bf;
+	--color-border-muted: #e2d6bf;
+	--color-accent-fg: #2c4c97;
+	--color-accent-emphasis: #3f63b5;
+	--color-accent-muted: #3f63b566;
+	--color-accent-subtle: #e3ebf8;
+	--color-btn-bg: #f7f1e3;
+	--color-btn-hover-bg: #f1e9d6;
+	--color-btn-primary-bg: #2c4c97;
+	--color-btn-primary-hover-bg: #3f63b5;
 	--color-btn-primary-disabled-bg: #a3add3;
-	--color-segmented-control-bg: #efeee8;
-	--color-segmented-control-button-bg: #fffefa;
-	--color-scale-blue-1: #e8ebf7;
+	--color-segmented-control-bg: #f1e9d6;
+	--color-segmented-control-button-bg: #fffdf6;
+	--color-scale-blue-1: #e3ebf8;
 	font-family: Pretendard, 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }

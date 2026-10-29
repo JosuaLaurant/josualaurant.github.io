@@ -1,115 +1,51 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCategory } from '../../lib/categories';
-import { formatDate, getPublishedPosts } from '../../lib/posts';
+import CategoryNotes from '../../components/CategoryNotes.astro';
+import DeskLayout from '../../components/DeskLayout.astro';
+import IndexList from '../../components/IndexList.astro';
+import NotebookSheet from '../../components/NotebookSheet.astro';
+import { getPostNumbers, getPublishedPosts } from '../../lib/posts';
 
 const posts = await getPublishedPosts();
+const numbers = getPostNumbers(posts);
 const years = [...new Set(posts.map((post) => post.data.pubDate.getFullYear()))];
 ---
 
 <BaseLayout title="전체 글 | Josua Laurant" description="이 블로그에 공개한 모든 기술 기록입니다.">
-	<section class="archive" aria-labelledby="archive-title">
-		<h1 id="archive-title">전체 글</h1>
-		<p class="count">{posts.length}개의 공개 기록</p>
-		{years.map((year) => (
-			<section class="year" aria-labelledby={`year-${year}`}>
-				<h2 id={`year-${year}`}>{year}</h2>
-				<ol>
-					{posts
-						.filter((post) => post.data.pubDate.getFullYear() === year)
-						.map((post) => (
-							<li>
-								<a href={`/posts/${post.id}/`}>{post.data.title}</a>
-								<p>
-									<time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
-									<span aria-hidden="true">·</span>
-									{getCategory(post.data.category).label}
-									{post.data.writing === 'ai-authored' && <span class="writing">✦ AI 작성</span>}
-								</p>
-							</li>
-						))}
-				</ol>
-			</section>
-		))}
-	</section>
+	<DeskLayout>
+		<NotebookSheet aria-labelledby="archive-title">
+			<h1 id="archive-title">전체 글</h1>
+			<p class="count mono">{posts.length}개의 공개 기록</p>
+			{years.map((year) => (
+				<section aria-labelledby={`year-${year}`}>
+					<h2 id={`year-${year}`} class="mono">{year}</h2>
+					<IndexList posts={posts.filter((post) => post.data.pubDate.getFullYear() === year)} numbers={numbers} />
+				</section>
+			))}
+		</NotebookSheet>
+		<CategoryNotes slot="aside" posts={posts} />
+	</DeskLayout>
 </BaseLayout>
 
 <style>
-	.archive {
-		margin-inline: auto;
-		max-width: var(--article-max);
-		padding-top: clamp(3.5rem, 9vw, 6rem);
-	}
-
 	h1 {
-		font-size: clamp(2.2rem, 6vw, 3.6rem);
-		letter-spacing: -0.055em;
-		line-height: 1.1;
+		font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+		letter-spacing: -0.05em;
+		line-height: 4rem;
 		margin: 0;
 	}
 
 	.count {
 		color: var(--ink-muted);
-		font-size: 0.9rem;
-		margin: 0.8rem 0 0;
-	}
-
-	.year {
-		margin-top: clamp(2.2rem, 5vw, 3rem);
+		font-size: 0.85rem;
+		line-height: var(--rule-gap);
+		margin: 0 0 var(--rule-gap);
 	}
 
 	h2 {
-		border-bottom: 1px solid var(--line);
-		color: var(--ink-muted);
-		font-size: 0.9rem;
-		font-weight: 700;
-		letter-spacing: 0.04em;
+		color: var(--accent-deep);
+		font-size: 0.95rem;
+		line-height: var(--rule-gap);
 		margin: 0;
-		padding-bottom: 0.6rem;
-	}
-
-	ol {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	li {
-		border-bottom: 1px solid var(--line);
-		padding: 1rem 0;
-	}
-
-	li a {
-		color: var(--ink);
-		font-size: 1.12rem;
-		font-weight: 700;
-		letter-spacing: -0.025em;
-		line-height: 1.4;
-		text-decoration: none;
-	}
-
-	li a:hover {
-		color: var(--accent-deep);
-		text-decoration: underline;
-		text-underline-offset: 0.22rem;
-	}
-
-	li a:active {
-		color: var(--accent-deep);
-	}
-
-	li p {
-		color: var(--ink-muted);
-		display: flex;
-		flex-wrap: wrap;
-		font-size: 0.84rem;
-		gap: 0.4rem;
-		margin: 0.35rem 0 0;
-	}
-
-	.writing {
-		color: var(--accent-deep);
-		font-weight: 700;
-		margin-left: 0.35rem;
 	}
 </style>

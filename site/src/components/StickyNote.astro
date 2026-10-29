@@ -1,0 +1,83 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+	as?: 'div' | 'nav';
+	color?: 'yellow' | 'pink' | 'mint' | 'blue';
+	tilt?: number;
+	href?: string;
+}
+
+const { as = 'div', color = 'yellow', tilt = -2, href, class: className, ...attrs } = Astro.props;
+const Tag = href ? 'a' : as;
+---
+
+<Tag class:list={['note', `note-${color}`, className]} href={href} style={`--tilt: ${tilt}deg`} {...attrs}>
+	<slot />
+</Tag>
+
+<style>
+	.note {
+		background: var(--note-yellow);
+		border-radius: 2px 2px 14px 2px;
+		box-shadow:
+			0 1px 1px rgb(0 0 0 / 8%),
+			0 10px 18px -10px var(--shadow);
+		color: var(--note-ink);
+		display: block;
+		padding: 1.4rem 1.1rem 1.2rem;
+		position: relative;
+		text-decoration: none;
+		transform: rotate(var(--tilt));
+		transition: transform var(--motion-interactive) var(--motion-ease);
+		width: 12.5rem;
+	}
+
+	.note::before {
+		background: repeating-linear-gradient(45deg, rgb(255 255 255 / 55%) 0 6px, rgb(255 255 255 / 30%) 6px 12px);
+		border-radius: 1px;
+		content: '';
+		height: 1.2rem;
+		left: 50%;
+		position: absolute;
+		top: -0.6rem;
+		transform: translateX(-50%) rotate(-3deg);
+		width: 4.2rem;
+	}
+
+	.note-pink {
+		background: var(--note-pink);
+	}
+
+	.note-mint {
+		background: var(--note-mint);
+	}
+
+	.note-blue {
+		background: var(--note-blue);
+	}
+
+	a.note:hover {
+		transform: rotate(0deg) translateY(-3px);
+	}
+
+	a.note:active {
+		transform: rotate(0deg) translateY(-1px);
+	}
+
+	.note :global(:is(a, strong, span, small, li)) {
+		color: var(--note-ink);
+	}
+
+	@media (max-width: 40rem) {
+		.note {
+			width: calc(50% - 0.6rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.note {
+			transition: none;
+		}
+	}
+</style>

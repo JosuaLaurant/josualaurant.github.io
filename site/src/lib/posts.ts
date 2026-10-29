@@ -21,3 +21,8 @@ export function getPostNeighbors(posts: CollectionEntry<'blog'>[], id: string) {
 		older: index >= 0 && index < posts.length - 1 ? posts[index + 1] : undefined,
 	};
 }
+
+export function getPostNumbers(posts: CollectionEntry<'blog'>[]) {
+	const chronological = [...posts].sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf() || a.id.localeCompare(b.id));
+	return new Map(chronological.map((post, index) => [post.id, index + 1]));
+}

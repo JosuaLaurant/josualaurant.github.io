@@ -1,0 +1,79 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'section'> {
+	as?: 'section' | 'article' | 'div';
+	pageLabel?: string;
+}
+
+const { as: Tag = 'section', class: className, pageLabel, ...attrs } = Astro.props;
+---
+
+<Tag class:list={['sheet', className]} {...attrs}>
+	<div class="spiral" aria-hidden="true"></div>
+	<svg class="clip" viewBox="0 0 30 80" aria-hidden="true"><path d="M10 70 V14 a7 7 0 0 1 14 0 V62 a11 11 0 0 1 -22 0 V20" fill="none" stroke="#a7adb6" stroke-width="2.6" stroke-linecap="round" /></svg>
+	<slot />
+	{pageLabel && <span class="page-label mono" aria-hidden="true">— {pageLabel} —</span>}
+</Tag>
+
+<style>
+	.sheet {
+		background-color: var(--paper);
+		border-radius: 4px 4px 6px 6px;
+		box-shadow:
+			0 1px 0 var(--paper-edge),
+			0 2px 0 var(--paper),
+			0 3px 0 var(--paper-edge),
+			0 5px 0 var(--paper),
+			0 6px 0 var(--paper-edge),
+			0 24px 40px -18px var(--shadow);
+		margin-inline: auto;
+		max-width: var(--sheet-max);
+		min-width: 0;
+		padding: 3rem clamp(1.1rem, 4vw, 2.75rem) 2.5rem clamp(2.9rem, 8vw, 5.2rem);
+		position: relative;
+		width: 100%;
+	}
+
+	.sheet::before {
+		border-left: 2px solid var(--margin-line);
+		bottom: 0;
+		content: '';
+		left: clamp(2.1rem, 6vw, 3.8rem);
+		position: absolute;
+		top: 0;
+	}
+
+	.spiral {
+		background: url('/desk/spiral.svg') repeat-x center / 28px 34px;
+		height: 34px;
+		left: 1.2rem;
+		pointer-events: none;
+		position: absolute;
+		right: 1.2rem;
+		top: -1rem;
+	}
+
+	.clip {
+		height: 5rem;
+		position: absolute;
+		right: -0.8rem;
+		top: 4.5rem;
+		transform: rotate(4deg);
+		width: 2rem;
+	}
+
+	@media (max-width: 40rem) {
+		.clip {
+			display: none;
+		}
+	}
+
+	.page-label {
+		bottom: 0.6rem;
+		color: var(--ink-muted);
+		font-size: 0.75rem;
+		position: absolute;
+		right: clamp(1.1rem, 4vw, 2.75rem);
+	}
+</style>

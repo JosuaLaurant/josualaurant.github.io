@@ -1,37 +1,48 @@
+/* 공책 본문. 모든 텍스트 줄을 --rule-gap에 맞추고, 줄에 맞출 수 없는 블록은 PostLayout의 snap script가 아래 여백을 보정한다. */
 .prose {
-	line-height: 1.82;
+	line-height: var(--rule-gap);
 }
 
 .prose :where(h2, h3) {
-	letter-spacing: -0.04em;
-	line-height: 1.22;
+	letter-spacing: -0.035em;
+	line-height: var(--rule-gap);
 	scroll-margin-top: 1.5rem;
 }
 
 .prose :where(h2) {
-	font-size: clamp(1.6rem, 4vw, 2.15rem);
-	margin-top: 3.4rem;
+	color: var(--accent-deep);
+	font-size: clamp(1.3rem, 3vw, 1.55rem);
+	margin: calc(var(--rule-gap) * 2) 0 0;
+	padding-bottom: 0;
 }
 
 .prose :where(h3) {
-	font-size: 1.3rem;
-	margin-top: 2.4rem;
+	font-size: 1.15rem;
+	margin: var(--rule-gap) 0 0;
+}
+
+.prose > :where(:first-child) {
+	margin-top: 0;
 }
 
 .prose :where(p, li) {
 	font-size: 1.04rem;
 }
 
-.prose :where(p, ul, ol, pre, blockquote) {
-	margin-block: 1.2rem;
+.prose :where(p, ul, ol, blockquote) {
+	margin: 0 0 var(--rule-gap);
+}
+
+.prose :where(h2 + p, h3 + p, h2 + ul, h2 + ol, h3 + ul, h3 + ol) {
+	margin-top: 0;
 }
 
 .prose :where(ul, ol) {
 	padding-left: 1.3rem;
 }
 
-.prose :where(li + li) {
-	margin-top: 0.45rem;
+.prose :where(li > ul, li > ol) {
+	margin: 0;
 }
 
 .prose :where(a) {
@@ -43,15 +54,17 @@
 .prose :where(code) {
 	background: var(--accent-soft);
 	border-radius: var(--radius-inline);
-	font-family: "SFMono-Regular", Consolas, monospace;
+	font-family: var(--font-mono);
 	font-size: 0.9em;
 	padding: 0.12em 0.3em;
 }
 
 .prose :where(pre) {
 	background: var(--code-surface);
-	border-radius: var(--radius-panel);
+	border-radius: 6px;
 	color: var(--code-ink);
+	line-height: 1.6;
+	margin: 0 0 var(--rule-gap);
 	overflow-x: auto;
 	padding: 1rem 1.15rem;
 }
@@ -67,8 +80,14 @@
 }
 
 .prose :where(blockquote) {
+	background: var(--paper);
 	border-left: 3px solid var(--accent);
 	color: var(--ink-muted);
 	margin-left: 0;
 	padding-left: 1rem;
+}
+
+.prose :where(img, table) {
+	background: var(--paper);
+	margin-bottom: var(--rule-gap);
 }

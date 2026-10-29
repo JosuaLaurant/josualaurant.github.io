@@ -1,145 +1,73 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
-import { getPublishedCategories } from '../lib/categories';
-import { getPublishedPosts } from '../lib/posts';
+import CategoryNotes from '../components/CategoryNotes.astro';
+import DeskLayout from '../components/DeskLayout.astro';
+import IndexList from '../components/IndexList.astro';
+import NotebookSheet from '../components/NotebookSheet.astro';
+import { getPostNumbers, getPublishedPosts } from '../lib/posts';
 
 const posts = await getPublishedPosts();
-const recentPosts = posts.slice(0, 6);
-const categories = getPublishedCategories(posts);
+const numbers = getPostNumbers(posts);
+const recentPosts = posts.slice(0, 8);
 ---
 
 <BaseLayout
 	title="Josua Laurant | 기술 기록"
 	description="개인 개발에서 했던 일과 다시 꺼내볼 만한 것들을 모읍니다. 새 글은 AI가 작성하고 포스팅합니다."
 >
-	<section class="hero" aria-labelledby="intro-title">
-		<h1 id="intro-title">작업하며 남긴 기록</h1>
-		<p class="lede">
-			개인 개발에서 했던 일과 다시 꺼내볼 만한 것들을 모읍니다. 새 글의 작성과 포스팅은 AI가
-			진행합니다.
-		</p>
-	</section>
-
-	<section id="posts" class="section" aria-labelledby="posts-title">
-		<div class="section-heading">
-			<h2 id="posts-title">최근 글</h2>
-			<p>{posts.length}개의 공개 기록</p>
-		</div>
-		<div class="post-list">
-			{recentPosts.map((post) => <PostCard post={post} />)}
-		</div>
-		{posts.length > recentPosts.length && <a class="more-link" href="/posts/">전체 글 보기 →</a>}
-	</section>
-
-	<nav class="topics section" aria-labelledby="topics-title">
-		<h2 id="topics-title">주제</h2>
-		<ul>
-			{categories.map((category) => (
-				<li><a href={`/categories/${category.slug}/`}>{category.label} <small>{category.posts.length}</small></a></li>
-			))}
-			<li><a class="all" href="/categories/">모든 주제와 태그 →</a></li>
-		</ul>
-	</nav>
+	<DeskLayout>
+		<NotebookSheet aria-labelledby="intro-title">
+			<h1 id="intro-title">작업하며 남긴 기록</h1>
+			<p class="lede">개인 개발에서 했던 일과 다시 꺼내볼 만한 것들을 모읍니다. 새 글의 작성과 포스팅은 AI가 진행합니다.</p>
+			<div class="index-head">
+				<h2>목차</h2>
+				<span class="mono">{posts.length}개의 기록</span>
+			</div>
+			<IndexList posts={recentPosts} numbers={numbers} />
+			{posts.length > recentPosts.length && <a class="more-link" href="/posts/">전체 글 보기 →</a>}
+		</NotebookSheet>
+		<CategoryNotes slot="aside" posts={posts} />
+	</DeskLayout>
 </BaseLayout>
 
 <style>
-	.hero {
-		max-width: 51rem;
-		padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem);
-	}
-
-	.hero h1 {
-		font-size: clamp(2.6rem, 7vw, 4.6rem);
-		letter-spacing: -0.065em;
-		line-height: 1;
-		margin: 0 0 1.2rem;
+	h1 {
+		font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+		letter-spacing: -0.05em;
+		line-height: 4rem;
+		margin: 0;
 	}
 
 	.lede {
 		color: var(--ink-muted);
-		font-size: clamp(1.05rem, 2vw, 1.2rem);
-		line-height: 1.8;
-		margin: 0;
-		max-width: 40rem;
+		font-size: 0.98rem;
+		line-height: var(--rule-gap);
+		margin: 0 0 var(--rule-gap);
 	}
 
-	.section {
-		border-top: 1px solid var(--line);
-		padding: clamp(2.2rem, 5vw, 3.5rem) 0;
-	}
-
-	.section-heading {
+	.index-head {
 		align-items: baseline;
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem 0.9rem;
-		margin-bottom: 1.25rem;
+		justify-content: space-between;
+		line-height: var(--rule-gap);
 	}
 
-	.section-heading > p {
-		color: var(--ink-muted);
-		font-size: 0.9rem;
+	h2 {
+		color: var(--accent-deep);
+		font-size: 0.95rem;
+		font-weight: 800;
 		margin: 0;
 	}
 
-	.section h2 {
-		font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-		letter-spacing: -0.045em;
-		margin: 0;
-	}
-
-	.post-list {
-		display: grid;
-		gap: 0.9rem;
+	.index-head span {
+		color: var(--accent-deep);
+		font-size: 0.8rem;
 	}
 
 	.more-link {
 		color: var(--accent-deep);
-		display: inline-block;
 		font-weight: 700;
-		margin-top: 1.25rem;
+		line-height: var(--rule-gap);
 		text-underline-offset: 0.22rem;
-	}
-
-	.topics ul {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.65rem;
-		list-style: none;
-		margin: 1.1rem 0 0;
-		padding: 0;
-	}
-
-	.topics a {
-		align-items: center;
-		border: 1px solid var(--line-strong);
-		border-radius: 99rem;
-		color: var(--ink);
-		display: inline-flex;
-		gap: 0.4rem;
-		min-height: 2.5rem;
-		padding: 0 1rem;
-		text-decoration: none;
-	}
-
-	.topics small {
-		color: var(--ink-muted);
-		font-size: 0.8rem;
-	}
-
-	.topics a.all {
-		border-color: transparent;
-		color: var(--accent-deep);
-		font-weight: 700;
-	}
-
-	.topics a:hover {
-		background: var(--accent-soft);
-	}
-
-	.topics a:active {
-		border-color: var(--accent-deep);
-		color: var(--accent-deep);
 	}
 </style>

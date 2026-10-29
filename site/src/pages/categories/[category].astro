@@ -1,69 +1,63 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/PostCard.astro';
+import CategoryNotes from '../../components/CategoryNotes.astro';
+import DeskLayout from '../../components/DeskLayout.astro';
+import IndexList from '../../components/IndexList.astro';
+import NotebookSheet from '../../components/NotebookSheet.astro';
 import { getCategory, getPublishedCategories, type CategorySlug } from '../../lib/categories';
-import { getPublishedPosts } from '../../lib/posts';
+import { getPostNumbers, getPublishedPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
 	const posts = await getPublishedPosts();
 	return getPublishedCategories(posts).map((category) => ({
 		params: { category: category.slug },
-		props: { category: category.slug, posts: category.posts },
+		props: { category: category.slug, posts: category.posts, allPosts: posts },
 	}));
 }
 
 interface Props {
 	category: CategorySlug;
 	posts: CollectionEntry<'blog'>[];
+	allPosts: CollectionEntry<'blog'>[];
 }
 
-const { category, posts } = Astro.props as Props;
+const { category, posts, allPosts } = Astro.props as Props;
+const numbers = getPostNumbers(allPosts);
 const categoryMeta = getCategory(category);
 ---
 
 <BaseLayout title={`${categoryMeta.label} | Josua Laurant`} description={categoryMeta.description}>
-	<section class="category-page" aria-labelledby="category-title">
-		<p class="eyebrow">주제</p>
-		<h1 id="category-title">{categoryMeta.label}</h1>
-		<p class="description">{categoryMeta.description}</p>
-		<p class="count">{posts.length}개의 글</p>
-		<div class="post-list">{posts.map((post) => <PostCard post={post} />)}</div>
-	</section>
+	<DeskLayout>
+		<NotebookSheet aria-labelledby="category-title">
+			<p class="eyebrow">주제</p>
+			<h1 id="category-title">{categoryMeta.label}</h1>
+			<p class="description">{categoryMeta.description} <span class="mono">· {posts.length}개의 글</span></p>
+			<IndexList posts={posts} numbers={numbers} />
+		</NotebookSheet>
+		<CategoryNotes slot="aside" posts={allPosts} />
+	</DeskLayout>
 </BaseLayout>
 
 <style>
-	.category-page {
-		margin-inline: auto;
-		max-width: var(--article-max);
-		padding-top: clamp(3.5rem, 9vw, 7rem);
+	.eyebrow {
+		line-height: var(--rule-gap);
 	}
 
 	h1 {
-		font-size: clamp(2.2rem, 6vw, 3.6rem);
-		letter-spacing: -0.055em;
-		margin: 0.6rem 0;
-	}
-
-	.description,
-	.count {
-		color: var(--ink-muted);
+		font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+		letter-spacing: -0.05em;
+		line-height: 4rem;
 		margin: 0;
 	}
 
 	.description {
-		font-size: 1.1rem;
-		line-height: 1.7;
+		color: var(--ink-muted);
+		line-height: var(--rule-gap);
+		margin: 0 0 var(--rule-gap);
 	}
 
-	.count {
-		font-size: 0.9rem;
-		margin-top: 1rem;
-	}
-
-	.post-list {
-		display: grid;
-		gap: 0.9rem;
-		margin-top: 2.5rem;
+	.description span {
+		font-size: 0.85rem;
 	}
 </style>

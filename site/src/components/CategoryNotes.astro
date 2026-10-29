@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import StickyNote from './StickyNote.astro';
+import { getPublishedCategories } from '../lib/categories';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const categories = getPublishedCategories(Astro.props.posts);
+const colors = ['yellow', 'pink', 'mint', 'blue'] as const;
+const tilts = [-3, 2.5, -1.5, 3];
+---
+
+{categories.map((category, index) => (
+	<StickyNote href={`/categories/${category.slug}/`} color={colors[index % colors.length]} tilt={tilts[index % tilts.length]}>
+		<strong>{category.label}</strong>
+		<span>{category.description}</span>
+		<small>{category.posts.length}개의 글 →</small>
+	</StickyNote>
+))}
+<StickyNote href="/categories/" color={colors[categories.length % colors.length]} tilt={tilts[categories.length % tilts.length]}>
+	<strong>모든 주제·태그</strong>
+	<span>태그로 더 좁혀 찾기</span>
+	<small>보러 가기 →</small>
+</StickyNote>
+
+<style>
+	strong {
+		display: block;
+		font-size: 1.05rem;
+		letter-spacing: -0.03em;
+		margin-bottom: 0.35rem;
+	}
+
+	span {
+		display: block;
+		font-size: 0.82rem;
+		line-height: 1.55;
+		opacity: 0.82;
+	}
+
+	small {
+		display: block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		margin-top: 0.6rem;
+		opacity: 0.75;
+	}
+</style>

@@ -5,6 +5,9 @@ import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../lib/posts';
 import Provenance from '../components/Provenance.astro';
 import Comments from '../components/Comments.astro';
+import DeskLayout from '../components/DeskLayout.astro';
+import NotebookSheet from '../components/NotebookSheet.astro';
+import StickyNote from '../components/StickyNote.astro';
 
 interface Heading {
 	depth: number;
@@ -24,9 +27,12 @@ interface Props {
 	headings: Heading[];
 	newer?: CollectionEntry<'blog'>;
 	older?: CollectionEntry<'blog'>;
+	number: number;
 }
 
-const { title, description, pubDate, updatedDate, tags, category, writing, summary, headings, newer, older } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, category, writing, summary, headings, newer, older, number } = Astro.props;
+const pageNo = `No.${String(number).padStart(3, '0')}`;
+const shortDate = (date: Date) => date.toISOString().slice(0, 10).replace(/-/g, '.');
 const categoryMeta = getCategory(category);
 const tableOfContents = headings.filter((heading) => heading.depth === 2);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
@@ -51,74 +57,137 @@ const structuredData = {
 		{tags.map((tag) => <meta property="article:tag" content={tag} />)}
 		<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 	</Fragment>
-	<article class="post">
-		<header class="post-header">
-			<p class="eyebrow"><a href={`/categories/${category}/`}>{categoryMeta.label}</a></p>
-			<h1>{title}</h1>
-			<p class="description">{description}</p>
-			<Provenance writing={writing} summary={summary} />
-			<p class="date">
-				<time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
-				{updatedDate && <span> · 업데이트 {formatDate(updatedDate)}</span>}
-			</p>
-			<ul class="tags" aria-label="태그">
-				{tags.map((tag) => <li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>)}
-			</ul>
-		</header>
-		{tableOfContents.length > 0 && (
-			<nav class="toc" aria-label="글 목차">
-				<strong>목차</strong>
-				<ol>
-					{tableOfContents.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
-				</ol>
+	<DeskLayout>
+		<NotebookSheet as="article" class="post" pageLabel={pageNo}>
+			<header class="post-header">
+				<dl class="fields">
+					<div><dt>주제</dt><dd><a href={`/categories/${category}/`}>{categoryMeta.label}</a></dd></div>
+					<div>
+						<dt>날짜</dt>
+						<dd class="mono">
+							<time datetime={pubDate.toISOString()} title={formatDate(pubDate)}>{shortDate(pubDate)}</time>
+							{updatedDate && shortDate(updatedDate) !== shortDate(pubDate) && <span> (고침 {shortDate(updatedDate)})</span>}
+						</dd>
+					</div>
+					<div><dt>번호</dt><dd class="mono">{pageNo}</dd></div>
+				</dl>
+				<h1>{title}</h1>
+				<p class="description">{description}</p>
+				<Provenance writing={writing} summary={summary} />
+				<ul class="tags" aria-label="태그">
+					{tags.map((tag) => <li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>)}
+				</ul>
+			</header>
+			{tableOfContents.length > 0 && (
+				<nav class="toc toc-inline" aria-label="글 목차">
+					<strong>목차</strong>
+					<ol>
+						{tableOfContents.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+					</ol>
+				</nav>
+			)}
+			<div class="post-body prose ruled"><slot /></div>
+			<nav class="post-nav" aria-label="다른 글">
+				{older && <a class="older" href={`/posts/${older.id}/`}><small>← 이전 장</small><span>{older.data.title}</span></a>}
+				{newer && <a class="newer" href={`/posts/${newer.id}/`}><small>다음 장 →</small><span>{newer.data.title}</span></a>}
 			</nav>
+			<p class="post-list-link"><a href="/posts/">전체 글 목록</a> · <a href={`/categories/${category}/`}>{categoryMeta.label}의 다른 글</a></p>
+			<Comments />
+		</NotebookSheet>
+		{tableOfContents.length > 0 && (
+			<div slot="aside" class="toc-aside">
+				<StickyNote as="nav" class="toc-note" tilt={1.5} aria-label="글 목차 메모">
+					<strong>목차</strong>
+					<ol>
+						{tableOfContents.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+					</ol>
+				</StickyNote>
+			</div>
 		)}
-		<div class="post-body prose"><slot /></div>
-		<nav class="post-nav" aria-label="다른 글">
-			{older && <a class="older" href={`/posts/${older.id}/`}><small>이전 글</small><span>{older.data.title}</span></a>}
-			{newer && <a class="newer" href={`/posts/${newer.id}/`}><small>다음 글</small><span>{newer.data.title}</span></a>}
-		</nav>
-		<p class="post-list-link"><a href="/posts/">전체 글 목록</a> · <a href={`/categories/${category}/`}>{categoryMeta.label}의 다른 글</a></p>
-		<Comments />
-	</article>
+	</DeskLayout>
 </BaseLayout>
 
+<script>
+	// 코드 블록·이미지·표처럼 높이가 줄 간격의 배수가 아닌 블록 뒤에서 줄이 어긋나지 않게 아래 여백을 보정한다.
+	const body = document.querySelector<HTMLElement>('.post-body');
+	if (body) {
+		const blocks = [...body.querySelectorAll<HTMLElement>(':scope > :is(pre, table, figure, img, blockquote, p:has(> img))')];
+		const snap = () => {
+			const gap = parseFloat(getComputedStyle(body).lineHeight);
+			for (const block of blocks) {
+				block.style.marginBottom = '';
+				const height = block.getBoundingClientRect().height + parseFloat(getComputedStyle(block).marginBottom);
+				block.style.marginBottom = `${parseFloat(getComputedStyle(block).marginBottom) + (Math.ceil(height / gap) * gap - height)}px`;
+			}
+		};
+		snap();
+		new ResizeObserver(snap).observe(body);
+	}
+</script>
+
 <style>
-	.post {
-		margin-inline: auto;
-		max-width: var(--article-max);
-		padding-top: clamp(3.5rem, 9vw, 7rem);
+	.fields {
+		border: 1.5px solid var(--accent-deep);
+		border-radius: 3px;
+		display: grid;
+		grid-template-columns: 1fr 1.25fr 0.8fr;
+		margin: 0 0 var(--rule-gap);
 	}
 
-	.post-header h1 {
-		font-size: clamp(2rem, 5vw, 3.2rem);
-		letter-spacing: -0.055em;
-		line-height: 1.12;
-		margin: 0.75rem 0 1rem;
+	.fields div {
+		border-left: 1px solid var(--accent-deep);
+		min-width: 0;
+		padding: 0.3rem 0.7rem 0.45rem;
 	}
 
-	.description {
-		color: var(--ink-muted);
-		font-size: clamp(1.05rem, 2vw, 1.2rem);
-		line-height: 1.75;
-		margin: 0 0 0.6rem;
+	.fields div:first-child {
+		border-left: 0;
 	}
 
-	.date {
-		color: var(--ink-muted);
-		font-size: 0.9rem;
-		margin: 1.3rem 0 0;
+	dt {
+		color: var(--accent-deep);
+		font-size: 0.66rem;
+		font-weight: 700;
 	}
 
-	.eyebrow a {
+	dd {
+		color: var(--ink);
+		font-size: 0.86rem;
+		margin: 0;
+	}
+
+	dd a {
 		color: inherit;
 		text-decoration: none;
 	}
 
-	.eyebrow a:hover {
+	dd a:hover {
 		color: var(--accent-deep);
 		text-decoration: underline;
-		text-underline-offset: 0.22rem;
+		text-underline-offset: 0.2rem;
+	}
+
+	dd span {
+		color: var(--ink-muted);
+		font-size: 0.78rem;
+	}
+
+	h1 {
+		font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+		letter-spacing: -0.05em;
+		line-height: 3rem;
+		margin: 0 0 1rem;
+	}
+
+	.description {
+		color: var(--ink-muted);
+		font-size: clamp(1rem, 2vw, 1.12rem);
+		line-height: var(--rule-gap);
+		margin: 0;
+	}
+
+	.post-header :global(.provenance) {
+		line-height: var(--rule-gap);
 	}
 
 	.tags {
@@ -126,7 +195,7 @@ const structuredData = {
 		flex-wrap: wrap;
 		gap: 0 0.75rem;
 		list-style: none;
-		margin: 0.7rem 0 0;
+		margin: 0 0 var(--rule-gap);
 		padding: 0;
 	}
 
@@ -135,7 +204,7 @@ const structuredData = {
 		color: var(--accent-deep);
 		display: inline-flex;
 		font-size: 0.84rem;
-		min-height: 1.75rem;
+		min-height: var(--rule-gap);
 		text-decoration: none;
 	}
 
@@ -143,47 +212,75 @@ const structuredData = {
 		text-decoration: underline;
 	}
 
-	.toc {
-		background: var(--accent-soft);
-		border-radius: var(--radius-panel);
+	.toc-inline {
+		border: 1px dashed var(--line-strong);
+		border-radius: 4px;
 		font-size: 0.92rem;
-		margin: 3rem 0;
-		padding: 1.2rem 1.3rem;
+		margin: 0 0 var(--rule-gap);
+		padding: 0.8rem 1rem;
 	}
 
-	.toc ol {
-		margin: 0.65rem 0 0;
-		padding-left: 1.25rem;
+	.toc-inline ol,
+	.toc-aside ol {
+		margin: 0.4rem 0 0;
+		padding-left: 1.2rem;
 	}
 
-	.toc li + li {
-		margin-top: 0.35rem;
+	.toc-inline li + li {
+		margin-top: 0.3rem;
 	}
 
-	.toc a {
+	.toc-inline a {
 		color: var(--ink);
 	}
 
-	.post-body {
-		padding-bottom: 1rem;
+	.toc-aside {
+		display: none;
+	}
+
+	.toc-aside :global(.toc-note) {
+		width: 13.5rem;
+	}
+
+	.toc-aside strong {
+		display: block;
+		font-size: 1rem;
+	}
+
+	.toc-aside ol {
+		font-size: 0.86rem;
+		line-height: 1.7;
+	}
+
+	@media (min-width: 78rem) {
+		.toc-inline {
+			display: none;
+		}
+
+		.toc-aside {
+			display: block;
+			height: 100%;
+		}
+
+		.toc-aside :global(.toc-note) {
+			position: sticky;
+			top: 2rem;
+		}
 	}
 
 	.post-nav {
-		border-top: 1px solid var(--line);
 		display: grid;
 		gap: 0.9rem;
-		margin-top: clamp(2.5rem, 6vw, 3.5rem);
-		padding-top: clamp(1.5rem, 4vw, 2rem);
+		margin-top: var(--rule-gap);
 	}
 
 	.post-nav a {
-		background: var(--surface);
-		border: 1px solid var(--line);
-		border-radius: var(--radius-panel);
+		border: 1px solid var(--line-strong);
+		border-radius: 4px;
 		color: var(--ink);
 		display: grid;
-		gap: 0.3rem;
-		padding: 1rem 1.15rem;
+		gap: 0.2rem;
+		padding: 0.8rem 1rem;
 		text-decoration: none;
 	}
 
@@ -208,8 +305,9 @@ const structuredData = {
 	}
 
 	.post-nav small {
-		color: var(--ink-muted);
+		color: var(--pen-red);
 		font-size: 0.8rem;
+		font-weight: 700;
 	}
 
 	.post-nav span {
@@ -227,5 +325,17 @@ const structuredData = {
 	.post-list-link a {
 		color: var(--accent-deep);
 		text-underline-offset: 0.2rem;
+	}
+
+	@media (max-width: 30rem) {
+		.fields {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.fields div:last-child {
+			border-left: 0;
+			border-top: 1px solid var(--accent-deep);
+			grid-column: 1 / 3;
+		}
 	}
 </style>

@@ -1,0 +1,196 @@
+---
+// 책상 위 소품. 모양과 위치는 BaseLayout head script가 방문마다 고르고, 날짜·시간에 따라 이스터에그가 나온다.
+---
+
+<div class="desk" aria-hidden="true">
+	<svg class="desk-stain" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(110,62,24,0.16)" stroke-width="5" /></svg>
+	<svg class="desk-mug" viewBox="0 0 140 120">
+		<rect x="100" y="44" width="34" height="20" rx="10" style="fill:var(--mug);stroke:var(--mug-edge)" stroke-width="2" />
+		<circle cx="58" cy="58" r="46" style="fill:var(--mug);stroke:var(--mug-edge)" stroke-width="2" />
+		<circle cx="58" cy="58" r="37" style="fill:var(--drink)" />
+		<circle cx="58" cy="58" r="37" fill="none" style="stroke:var(--drink-edge)" stroke-width="3" />
+		<ellipse cx="46" cy="46" rx="12" ry="7" fill="rgba(255,255,255,0.18)" transform="rotate(-30 46 46)" />
+	</svg>
+	<svg class="desk-mug desk-mug-second" viewBox="0 0 140 120">
+		<rect x="100" y="44" width="34" height="20" rx="10" fill="#f3efe8" stroke="#d6cfc1" stroke-width="2" />
+		<circle cx="58" cy="58" r="46" fill="#f3efe8" stroke="#d6cfc1" stroke-width="2" />
+		<circle cx="58" cy="58" r="37" fill="#5a3820" />
+		<circle cx="58" cy="58" r="22" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2" />
+	</svg>
+	<svg class="desk-pencil" viewBox="0 0 300 24">
+		<rect x="0" y="2" width="24" height="20" rx="5" fill="#ef8f8a" />
+		<rect x="22" y="2" width="18" height="20" fill="#b9bdc4" />
+		<rect x="25" y="2" width="2" height="20" fill="#9ca1a9" />
+		<rect x="31" y="2" width="2" height="20" fill="#9ca1a9" />
+		<rect x="40" y="2" width="220" height="20" style="fill:var(--pencil)" />
+		<rect x="40" y="2" width="220" height="6" style="fill:var(--pencil-hi)" />
+		<rect x="40" y="16" width="220" height="6" style="fill:var(--pencil-lo)" />
+		<polygon points="260,2 298,12 260,22" fill="#ecd0a6" />
+		<polygon points="286,8.8 298,12 286,15.2" fill="#3b3b3b" />
+	</svg>
+	<svg class="desk-pen" viewBox="0 0 300 24">
+		<rect x="0" y="1" width="112" height="22" rx="10" fill="#1d1f24" />
+		<rect x="12" y="4" width="82" height="3" rx="1.5" fill="#c9a54a" />
+		<rect x="110" y="1" width="6" height="22" fill="#c9a54a" />
+		<rect x="116" y="2" width="124" height="20" rx="4" fill="#2b2e36" />
+		<polygon points="240,3 262,6 262,18 240,21" fill="#3a3d46" />
+		<polygon points="262,6 298,12 262,18" fill="#d8b55a" />
+		<line x1="270" y1="12" x2="296" y2="12" stroke="#8f7531" stroke-width="1" />
+	</svg>
+
+	<svg class="desk-egg egg-xmas" viewBox="0 0 140 110">
+		<path d="M10 90 C50 70 90 50 130 20" fill="none" stroke="#6b4a2b" stroke-width="4" stroke-linecap="round" />
+		{[18, 34, 50, 66, 82, 98, 114].map((x, i) => (
+			<g transform={`translate(${x} ${86 - i * 10})`}>
+				<path d="M0 0 l-14 -10 M0 0 l-12 8 M0 0 l6 -15 M0 0 l12 -4" stroke="#2f7a4a" stroke-width="3" stroke-linecap="round" />
+			</g>
+		))}
+		<line x1="78" y1="54" x2="78" y2="68" stroke="#b9a15c" stroke-width="1.5" />
+		<rect x="73" y="66" width="10" height="6" rx="1" fill="#d4b257" />
+		<circle cx="78" cy="84" r="14" fill="#c8402f" />
+		<ellipse cx="73" cy="79" rx="4" ry="3" fill="rgba(255,255,255,0.45)" />
+	</svg>
+	<svg class="desk-egg egg-newyear" viewBox="0 0 140 90">
+		{[[42, 50, 30], [96, 42, 26]].map(([cx, cy, r]) => (
+			<g>
+				<circle cx={cx} cy={cy} r={r} fill="#f39a2b" />
+				<circle cx={cx} cy={cy} r={r} fill="none" stroke="#dc7f14" stroke-width="2" />
+				<ellipse cx={cx - r / 3} cy={cy - r / 3} rx={r / 4} ry={r / 6} fill="rgba(255,255,255,0.35)" />
+				<path d={`M${cx} ${cy - r + 4} q8 -12 18 -8 q-6 10 -18 8`} fill="#4f8a3c" />
+			</g>
+		))}
+	</svg>
+	<svg class="desk-egg egg-halloween" viewBox="0 0 120 100">
+		<path d="M58 24 q4 -14 14 -16" fill="none" stroke="#5b6b2e" stroke-width="5" stroke-linecap="round" />
+		<ellipse cx="38" cy="60" rx="24" ry="30" fill="#e8762d" />
+		<ellipse cx="82" cy="60" rx="24" ry="30" fill="#e8762d" />
+		<ellipse cx="60" cy="60" rx="24" ry="32" fill="#f08a3c" />
+		<path d="M44 52 l8 -8 l8 8 Z M64 52 l8 -8 l8 8 Z M46 72 q14 10 28 0 l-4 6 l-4 -4 l-6 6 l-6 -6 l-4 4 Z" fill="#5a2a10" />
+	</svg>
+	<svg class="desk-egg egg-birthday" viewBox="0 0 100 120">
+		<rect x="47" y="14" width="6" height="26" rx="2" fill="#7fb3e8" />
+		<path d="M50 2 q6 8 0 12 q-6 -4 0 -12" fill="#f5b12e" />
+		<path d="M18 54 q4 -18 32 -16 q28 -2 32 16 q4 10 -8 12 h-48 q-12 -2 -8 -12" fill="#fff4f2" />
+		<circle cx="38" cy="50" r="3" fill="#e2574c" />
+		<circle cx="60" cy="46" r="3" fill="#3f8f5a" />
+		<polygon points="20,66 80,66 72,112 28,112" fill="#f28c9b" />
+		{[30, 42, 54, 66].map((x) => <line x1={x} y1="66" x2={x - 2} y2="112" stroke="#e06f80" stroke-width="2" />)}
+	</svg>
+	<svg class="desk-egg egg-cat" viewBox="0 0 260 120">
+		{[[20, 96, -20], [62, 74, -10], [106, 84, -20], [150, 58, -10], [196, 66, -20], [236, 38, -10]].map(([x, y, r]) => (
+			<g transform={`translate(${x} ${y}) rotate(${r})`} fill="rgba(60,38,22,0.32)">
+				<ellipse cx="0" cy="6" rx="8" ry="7" />
+				<circle cx="-8" cy="-5" r="3.2" />
+				<circle cx="-3" cy="-10" r="3.2" />
+				<circle cx="3" cy="-10" r="3.2" />
+				<circle cx="8" cy="-5" r="3.2" />
+			</g>
+		))}
+	</svg>
+</div>
+
+<style>
+	.desk {
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+		position: absolute;
+		z-index: 0;
+		--mug-top: 4rem;
+		--mug-shift: 0rem;
+		--writer-top: 20rem;
+		--writer-rot: -28deg;
+		--egg-top: 31rem;
+		--side: calc(50% - var(--sheet-max) / 2);
+	}
+
+	:global(:root[data-layout='b']) .desk {
+		--mug-top: 22rem;
+		--mug-shift: 2rem;
+		--writer-top: 7rem;
+		--writer-rot: -12deg;
+		--egg-top: 11.5rem;
+	}
+
+	:global(:root[data-layout='c']) .desk {
+		--mug-top: 11rem;
+		--mug-shift: -1.5rem;
+		--writer-top: 31rem;
+		--writer-rot: 22deg;
+		--egg-top: 21.5rem;
+	}
+
+	svg {
+		display: block;
+		position: absolute;
+	}
+
+	.desk-mug,
+	.desk-stain {
+		left: calc(var(--side) - 17rem + var(--mug-shift));
+		top: var(--mug-top);
+		width: 11rem;
+	}
+
+	.desk-stain {
+		left: calc(var(--side) - 16.4rem + var(--mug-shift));
+		top: calc(var(--mug-top) + 1.2rem);
+		width: 9.5rem;
+	}
+
+	.desk-mug-second {
+		display: none;
+		left: calc(var(--side) - 12rem + var(--mug-shift));
+		top: calc(var(--mug-top) + 9rem);
+		width: 9.5rem;
+	}
+
+	.desk-pencil,
+	.desk-pen {
+		left: calc(var(--side) - 21rem);
+		top: var(--writer-top);
+		transform: rotate(var(--writer-rot));
+		width: 19rem;
+	}
+
+	.desk-pen,
+	.desk-egg {
+		display: none;
+	}
+
+	.egg-xmas,
+	.egg-newyear,
+	.egg-halloween,
+	.egg-birthday {
+		left: calc(var(--side) - 15rem);
+		top: var(--egg-top);
+		width: 9rem;
+	}
+
+	.egg-cat {
+		left: calc(var(--side) - 19rem);
+		top: var(--egg-top);
+		width: 16rem;
+	}
+
+	:global(:root[data-stain='off']) .desk-stain,
+	:global(:root[data-writer='pen']) .desk-pencil {
+		display: none;
+	}
+
+	:global(:root[data-writer='pen']) .desk-pen,
+	:global(:root[data-drink='double']) .desk-mug-second,
+	:global(:root[data-egg='xmas']) .egg-xmas,
+	:global(:root[data-egg='newyear']) .egg-newyear,
+	:global(:root[data-egg='halloween']) .egg-halloween,
+	:global(:root[data-egg='birthday']) .egg-birthday,
+	:global(:root[data-egg='cat']) .egg-cat {
+		display: block;
+	}
+
+	@media (max-width: 88rem) {
+		.desk {
+			display: none;
+		}
+	}
+</style>

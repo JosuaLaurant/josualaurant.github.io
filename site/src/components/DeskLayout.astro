@@ -1,0 +1,43 @@
+---
+// 가운데 공책과 오른쪽 포스트잇 열. 좁은 화면에서는 포스트잇이 공책 아래로 내려간다.
+---
+
+<div class="desk-layout">
+	<div class="desk-main"><slot /></div>
+	{Astro.slots.has('aside') && <aside class="desk-aside"><slot name="aside" /></aside>}
+</div>
+
+<style>
+	.desk-layout {
+		display: grid;
+		gap: 3rem 2.2rem;
+		grid-template-columns: minmax(0, 1fr);
+		padding-top: clamp(2rem, 5vw, 3.2rem);
+	}
+
+	.desk-aside {
+		align-content: start;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.6rem 1.2rem;
+		justify-content: center;
+	}
+
+	@media (min-width: 78rem) {
+		.desk-layout {
+			grid-template-columns: minmax(0, 1fr) minmax(0, var(--sheet-max)) minmax(0, 1fr);
+		}
+
+		.desk-main {
+			grid-column: 2;
+		}
+
+		.desk-aside {
+			display: grid;
+			gap: 1.6rem;
+			grid-column: 3;
+			justify-content: start;
+			padding-top: 2.6rem;
+		}
+	}
+</style>

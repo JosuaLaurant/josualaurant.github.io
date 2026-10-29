@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Desk from '../components/Desk.astro';
 import '../styles/global.css';
 import '../styles/prose.css';
 
@@ -42,6 +43,30 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 				if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
 			} catch {}
 		</script>
+		<script is:inline>
+			(() => {
+				const root = document.documentElement;
+				const query = new URLSearchParams(location.search);
+				const pick = (items) => items[Math.floor(Math.random() * items.length)];
+				const now = new Date();
+				const month = now.getMonth() + 1;
+				const day = now.getDate();
+				const hour = now.getHours();
+				let egg = 'none';
+				if (month === 12 && day >= 24 && day <= 26) egg = 'xmas';
+				else if (month === 1 && day === 1) egg = 'newyear';
+				else if (month === 10 && day === 31) egg = 'halloween';
+				else if (month === 7 && day === 21) egg = 'birthday';
+				else if (Math.random() < 0.03) egg = 'cat';
+				root.dataset.mug = pick(['white', 'navy', 'terracotta', 'mint']);
+				root.dataset.pencil = pick(['yellow', 'red', 'green', 'blue']);
+				root.dataset.writer = Math.random() < 0.25 ? 'pen' : 'pencil';
+				root.dataset.stain = Math.random() < 0.6 ? 'on' : 'off';
+				root.dataset.layout = pick(['a', 'b', 'c']);
+				root.dataset.egg = query.get('desk-egg') ?? egg;
+				root.dataset.drink = query.get('desk-drink') ?? (hour >= 23 || hour < 5 ? 'tea' : now.getDay() === 1 ? 'double' : 'coffee');
+			})();
+		</script>
 		<link rel="alternate" type="application/rss+xml" title="Josua Laurant 기술 기록 RSS" href="/rss.xml" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
@@ -50,7 +75,21 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 	<body>
 		<a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
 		<Header />
-		<main id="main-content" class="site-shell"><slot /></main>
+		<div class="desk-scene">
+			<Desk />
+			<main id="main-content" class="site-shell"><slot /></main>
+		</div>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.desk-scene {
+		position: relative;
+	}
+
+	main {
+		position: relative;
+		z-index: 1;
+	}
+</style>

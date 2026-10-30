@@ -56,7 +56,10 @@
 title: OCR 서버를 매 페이지 재시작하지 말아야 하는 이유
 description: runtime lease로 동일 결과를 유지하며 처리 시간을 줄인 기록
 pubDate: 2026-07-21
-updatedDate: 2026-07-21 # 선택
+updatedDate: 2026-07-21 # 선택, revisions가 있으면 가장 최근 날짜와 같아야 함
+revisions: # 선택, 공개 뒤 고친 내용. 글 끝 '고친 기록'에 표시
+  - date: 2026-07-21
+    note: 고친 내용 한 줄
 draft: true
 category: development
 writing: ai-authored

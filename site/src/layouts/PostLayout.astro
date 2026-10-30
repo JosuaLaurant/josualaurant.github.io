@@ -20,6 +20,7 @@ interface Props {
 	description: string;
 	pubDate: Date;
 	updatedDate?: Date;
+	revisions: { date: Date; note: string }[];
 	tags: string[];
 	category: CategorySlug;
 	writing: 'ai-authored' | 'direct';
@@ -30,10 +31,12 @@ interface Props {
 	number: number;
 }
 
-const { title, description, pubDate, updatedDate, tags, category, writing, summary, headings, newer, older, number } = Astro.props;
+const { title, description, pubDate, updatedDate, revisions, tags, category, writing, summary, headings, newer, older, number } = Astro.props;
 const pageNo = `No.${String(number).padStart(3, '0')}`;
 const shortDate = (date: Date) => date.toISOString().slice(0, 10).replace(/-/g, '.');
 const categoryMeta = getCategory(category);
+const revisionLog = [...revisions].sort((a, b) => b.date.getTime() - a.date.getTime());
+const sourceHistoryUrl = `https://github.com/JosuaLaurant/josualaurant.github.io/commits/main/site/src/content/blog/${Astro.params.slug}.md`;
 const tableOfContents = headings.filter((heading) => heading.depth === 2);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const structuredData = {
@@ -66,7 +69,11 @@ const structuredData = {
 						<dt>날짜</dt>
 						<dd class="mono">
 							<time datetime={pubDate.toISOString()} title={formatDate(pubDate)}>{shortDate(pubDate)}</time>
-							{updatedDate && shortDate(updatedDate) !== shortDate(pubDate) && <span> (고침 {shortDate(updatedDate)})</span>}
+							{revisionLog.length > 0 ? (
+								<a class="revised" href="#revisions"> (고침 {shortDate(revisionLog[0].date)})</a>
+							) : (
+								updatedDate && shortDate(updatedDate) !== shortDate(pubDate) && <span> (고침 {shortDate(updatedDate)})</span>
+							)}
 						</dd>
 					</div>
 					<div><dt>번호</dt><dd class="mono">{pageNo}</dd></div>
@@ -87,6 +94,18 @@ const structuredData = {
 				</nav>
 			)}
 			<div class="post-body prose ruled"><slot /></div>
+			{revisionLog.length > 0 && (
+				<section class="revisions" id="revisions" aria-labelledby="revisions-title">
+					<h2 id="revisions-title">고친 기록</h2>
+					<ol>
+						{revisionLog.map((revision) => (
+							<li><time class="mono" datetime={revision.date.toISOString()}>{shortDate(revision.date)}</time><span>{revision.note}</span></li>
+						))}
+						<li><time class="mono" datetime={pubDate.toISOString()}>{shortDate(pubDate)}</time><span>처음 씀</span></li>
+					</ol>
+					<a href={sourceHistoryUrl} rel="noopener">원고의 모든 변경 보기 ↗</a>
+				</section>
+			)}
 			<nav class="post-nav" aria-label="다른 글">
 				{older && <a class="older" href={`/posts/${older.id}/`}><small>← 이전 장</small><span>{older.data.title}</span></a>}
 				{newer && <a class="newer" href={`/posts/${newer.id}/`}><small>다음 장 →</small><span>{newer.data.title}</span></a>}
@@ -169,6 +188,11 @@ const structuredData = {
 
 	dd span {
 		color: var(--ink-muted);
+		font-size: 0.78rem;
+	}
+
+	dd .revised {
+		color: var(--pen-red);
 		font-size: 0.78rem;
 	}
 
@@ -268,6 +292,57 @@ const structuredData = {
 		}
 	}
 
+	/* 공개 뒤 고친 내용을 빨간 펜으로 덧적은 메모처럼 보여 준다. */
+	.revisions {
+		border-top: 1.5px dashed var(--pen-red);
+		margin-top: var(--rule-gap);
+		padding-top: 1rem;
+	}
+
+	.revisions h2 {
+		color: var(--pen-red);
+		font-size: 0.9rem;
+		letter-spacing: 0;
+		line-height: var(--rule-gap);
+		margin: 0;
+	}
+
+	.revisions ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.revisions li {
+		display: grid;
+		font-size: 0.9rem;
+		gap: 0 1rem;
+		grid-template-columns: 6.5rem minmax(0, 1fr);
+		line-height: 1.6;
+		padding: 0.3rem 0;
+	}
+
+	.revisions time {
+		color: var(--pen-red);
+		font-size: 0.82rem;
+	}
+
+	.revisions li:last-child span {
+		color: var(--ink-muted);
+	}
+
+	.revisions > a {
+		color: var(--ink-muted);
+		display: inline-block;
+		font-size: 0.82rem;
+		margin-top: 0.4rem;
+		text-underline-offset: 0.2rem;
+	}
+
+	.revisions > a:hover {
+		color: var(--accent-deep);
+	}
+
 	.post-nav {
 		display: grid;
 		gap: 0.9rem;
@@ -330,6 +405,10 @@ const structuredData = {
 	@media (max-width: 30rem) {
 		.fields {
 			grid-template-columns: 1fr 1fr;
+		}
+
+		.revisions li {
+			grid-template-columns: minmax(0, 1fr);
 		}
 
 		.fields div:last-child {
